@@ -10,5 +10,10 @@
         <module name="polyglot.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="polyglot" target="17" />
+      <module name="polyglot.main" target="17" />
+      <module name="polyglot.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
