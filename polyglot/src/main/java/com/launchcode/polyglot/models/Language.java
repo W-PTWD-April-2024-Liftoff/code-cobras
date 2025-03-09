@@ -36,6 +36,11 @@ public class Language {
     @OneToMany(mappedBy = "language", cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
-
+    public Language(String name, String description, Boolean isPublic,User user) {
+        this.name = name;
+        this.description = description;
+        this.isPublic = isPublic;
+        this.user=user;
+    }
 }
 

@@ -26,5 +26,15 @@ public class Comment {
     private Language language;
 
     private LocalDateTime createdAt = LocalDateTime.now();
-
+    public Comment(String text, User user, Language language) {
+        this.text = text;
+        this.user = user;
+        this.language = language;
+        this.createdAt = LocalDateTime.now();
+    }
+    public Comment() {}
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
