@@ -1,34 +1,48 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import Navbar from './layout/Navbar'
+import Home from './pages/Home'
+import Favorites from './pages/Favorites'
+import Compare from './pages/Compare'
+import AddProfile from './users/AddProfile'
+import ViewProfile from './users/ViewProfile'
+import EditProfile from './users/EditProfile'
+import AddLanguage from './languages/AddLanguage'
+import ViewLanguage from './languages/ViewLanguage'
+import EditLanguage from './languages/EditLanguage'
+
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
 
 function App() {
   const [count, setCount] = useState(0)
 
+  let id;
+
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="App">
+      <Router>
+        <Navbar/>
+        <Routes>
+          <Route exact path="/" element={<Home/>}></Route>
+          <Route exact path="/favorites" element={<Favorites/>}></Route>
+          <Route exact path="/compare" element={<Compare/>}></Route>
+          <Route exact path="/viewprofile" element={<ViewProfile/>}></Route>
+          <Route exact path="/addprofile" element={<AddProfile/>}></Route>
+          <Route exact path="/editprofile/:id" element={<EditProfile/>}></Route>
+          <Route exact path="/viewlanguage" element={<ViewLanguage/>}></Route>
+          <Route exact path="/addlanguage" element={<AddLanguage/>}></Route>
+          <Route exact path="/editlanguage/:id" element={<EditLanguage/>}></Route>
+        </Routes>
+        
+      </Router>
+      
+        
+
+    
+      
+    </div>
   )
 }
 
