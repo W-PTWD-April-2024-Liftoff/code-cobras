@@ -17,12 +17,12 @@ public class User {
     private String authority;
 
     //Constructors
-    public User(int id, String username, String email, String bio, String authority) {
+    public User(int id, String username, String email, String bio) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.bio = bio;
-        this.authority = authority;
+        //this.authority = authority; , String authority
     }
 
     //Getters and Setters

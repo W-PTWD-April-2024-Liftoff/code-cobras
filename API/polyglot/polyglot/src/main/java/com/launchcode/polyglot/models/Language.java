@@ -18,12 +18,13 @@ public class Language {
     //image
 
     //Constructor
-    public Language(int id, String name, String description, Boolean accessFlag, String username) {
+    public Language(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.accessFlag = accessFlag;
-        this.username = username;
+//        this.accessFlag = accessFlag;
+//        this.username = username;
+        //, Boolean accessFlag, String username
     }
 
     //Getters and Setters
