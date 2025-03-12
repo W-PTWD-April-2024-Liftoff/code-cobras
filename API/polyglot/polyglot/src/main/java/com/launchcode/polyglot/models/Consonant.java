@@ -3,8 +3,10 @@ package com.launchcode.polyglot.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class Consonant {
 
     @Id
@@ -19,14 +21,4 @@ public class Consonant {
     public Consonant() {
     }
 
-    //Getters
-    public int getId() {return id;}
-
-    public String getName() {return name;}
-
-    public String getPlace() {return place;}
-
-    public String getManner() {return manner;}
-
-    public String getVoicing() {return voicing;}
 }

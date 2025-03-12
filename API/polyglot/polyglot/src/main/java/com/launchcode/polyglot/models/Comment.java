@@ -3,8 +3,10 @@ package com.launchcode.polyglot.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class Comment {
 
     @Id
@@ -23,17 +25,8 @@ public class Comment {
         this.comment = comment;
         this.accessFlag = accessFlag;
     }
+public Comment() {
 
-    //Getters and Setters
-    public int getId() {return id;}
-    public void setId(int id) {this.id = id;}
+}
 
-    public String getUsername() {return username;}
-    public void setUsername(String username) {this.username = username;}
-
-    public String getComment() {return comment;}
-    public void setComment(String comment) {this.comment = comment;}
-
-    public String getAccessFlag() {return accessFlag;}
-    public void setAccessFlag(String accessFlag) {this.accessFlag = accessFlag;}
 }

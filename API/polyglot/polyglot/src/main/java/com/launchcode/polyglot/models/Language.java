@@ -3,8 +3,10 @@ package com.launchcode.polyglot.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class Language {
 
     @Id
@@ -27,19 +29,7 @@ public class Language {
         //, Boolean accessFlag, String username
     }
 
-    //Getters and Setters
-    public int getId() {return id;}
-    public void setId(int id) {this.id = id;}
+    public Language() {
 
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
-
-    public String getDescription() {return description;}
-    public void setDescription(String description) {this.description = description;}
-
-    public Boolean getAccessFlag() {return accessFlag;}
-    public void setAccessFlag(Boolean accessFlag) {this.accessFlag = accessFlag;}
-
-    public String getUsername() {return username;}
-    public void setUsername(String username) {this.username = username;}
+    }
 }

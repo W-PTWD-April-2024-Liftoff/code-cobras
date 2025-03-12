@@ -3,8 +3,10 @@ package com.launchcode.polyglot.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class Vowel {
 
     @Id
@@ -20,14 +22,4 @@ public class Vowel {
     public Vowel() {
     }
 
-    //Getters
-    public int getId() {return id;}
-
-    public String getName() {return name;}
-
-    public String getHeight() {return height;}
-
-    public String getRoundness() {return roundness;}
-
-    public String getBackness() {return backness;}
 }

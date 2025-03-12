@@ -3,8 +3,10 @@ package com.launchcode.polyglot.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class Syllable {
 
     @Id
@@ -25,19 +27,4 @@ public class Syllable {
         this.codaRequiredLength = codaRequiredLength;
     }
 
-    //Getters and Setters
-    public int getId() {return id;}
-    public void setId(int id) {this.id = id;}
-
-    public int getOnsetLength() {return onsetLength;}
-    public void setOnsetLength(int onsetLength) {this.onsetLength = onsetLength;}
-
-    public int getCodaLength() {return codaLength;}
-    public void setCodaLength(int codaLength) {this.codaLength = codaLength;}
-
-    public int getOnsetRequiredLength() {return onsetRequiredLength;}
-    public void setOnsetRequiredLength(int onsetRequiredLength) {this.onsetRequiredLength = onsetRequiredLength;}
-
-    public int getCodaRequiredLength() {return codaRequiredLength;}
-    public void setCodaRequiredLength(int codaRequiredLength) {this.codaRequiredLength = codaRequiredLength;}
 }
