@@ -25,7 +25,7 @@ export default function Navbar() {
                         </ul>
                     </div>
 
-                    <Link className="btn btn-success" to="/viewprofile" style={{margin:5}}>Login</Link>
+                    <Link className="btn btn-success" to="/login" style={{margin:5}}>Login</Link>
                     <Link className="btn btn-outline-success" to="/addprofile" style={{margin:5}}>Sign Up</Link>
                 </div>
             </nav>

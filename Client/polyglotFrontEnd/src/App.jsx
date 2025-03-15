@@ -12,6 +12,10 @@ import AddLanguage from './languages/AddLanguage'
 import ViewLanguage from './languages/ViewLanguage'
 import EditLanguage from './languages/EditLanguage'
 
+import LoginPage from './pages/LoginPage'
+import CallbackPage from './pages/CallbackPage'
+import React from 'react'
+
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 
@@ -34,6 +38,9 @@ function App() {
           <Route exact path="/viewlanguage" element={<ViewLanguage/>}></Route>
           <Route exact path="/addlanguage" element={<AddLanguage/>}></Route>
           <Route exact path="/editlanguage/:id" element={<EditLanguage/>}></Route>
+
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/callback" element={<CallbackPage/>} />
         </Routes>
         
       </Router>
