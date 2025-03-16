@@ -3,21 +3,66 @@ package com.launchcode.polyglot.controllers;
 import com.launchcode.polyglot.exceptions.UserNotFoundException;
 import com.launchcode.polyglot.models.User;
 import com.launchcode.polyglot.models.data.UserRepository;
+import com.launchcode.polyglot.models.dto.LoginFormDTO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5174")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
+
     @PostMapping("/addprofile")
-    public User newUser(@RequestBody User newUser) {
-        return userRepository.save(newUser);
+    public String newUser(@RequestBody LoginFormDTO newUser) {  //ResponseEntity<?>
+        String returnMsg = "";
+
+        User existingUser = userRepository.findByUsername(newUser.getUsername());
+
+        if (existingUser != null) {
+            returnMsg = "A user with that username already exists";
+        }
+        else {
+            User newRegisterUser = new User(newUser.getUsername(), newUser.getEmail(), newUser.getBio(), newUser.getPassword());
+            userRepository.save(newRegisterUser);
+            //HttpHeaders headers = new HttpHeaders();
+            //headers.add("Location", "http://localhost:5173");
+            returnMsg = "Success";
+        }
+        return returnMsg;
+        //return new ResponseEntity<>(returnMsg, HttpStatus.FOUND);  //headers
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginFormDTO newUser, HttpSession session) {
+
+
+        try{
+
+            User user = userRepository.findByUsername(newUser.getUsername());
+            if(!user.getUsername().equals(newUser.getUsername())){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username");
+            }
+
+            if (!user.isMatchingPassword(newUser.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            }
+            session.setAttribute("user", newUser.getUsername());
+            return ResponseEntity.ok("Login was successful!");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unknown error occurred");
+        }
     }
 
     @GetMapping("/viewprofile/{id}")
