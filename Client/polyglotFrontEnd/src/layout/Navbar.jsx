@@ -1,17 +1,25 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from '../security/AuthContext';
 
 export default function Navbar() {
 
     //const auth = useContext(AuthProvider); // Access the context
     const {isAuthenticated} = useAuth();
+    const {logout} = useAuth();
+    const navigate = useNavigate()
 //     let isVisible = false;
 //     if(!auth===undefined){
 //         if(auth.isAuthenticated){isVisible = true}
 //     }
 //     console.log(auth);
  //console.log(isAuthenticated);
+ const signout = () =>{
+    logout();
+    navigate("/login");
+ }
+
+
     return (
         <div>
             <nav className="navbar bg-dark sticky-top navbar-expand-lg bg-body-tertiary border-bottom border-3 border-success">
@@ -38,6 +46,7 @@ export default function Navbar() {
                     {(isAuthenticated)   ? <Link className="btn btn-success" to="/viewprofile" style={{margin:5}}>Profile</Link> : <p></p>}
                     {(!isAuthenticated)   ? <Link className="btn btn-success" to="/login" style={{margin:5}}>Login</Link> : <p></p>}
                     {(!isAuthenticated)   ? <Link className="btn btn-outline-success" to="/addprofile" style={{margin:5}}>Sign Up</Link> : <p></p>}
+                    {(isAuthenticated)   ? <Link className="btn btn-outline-success" onClick={signout} style={{margin:5}}>Sign Out</Link> : <p></p>}
                 </div>
             </nav>
         </div>

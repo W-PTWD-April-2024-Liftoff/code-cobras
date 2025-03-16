@@ -55,7 +55,7 @@ export default function AddProfile() {
                 <h2>Create a Profile</h2>
                 <p>Join the Polyglot community!</p>
             </div>
-            
+            <p className='errorNotification'>{errorMsg}</p>
             <form onSubmit={(e)=> onSubmit(e)}>
                 <div className="row">
                     <div className="text-center mt-5">
