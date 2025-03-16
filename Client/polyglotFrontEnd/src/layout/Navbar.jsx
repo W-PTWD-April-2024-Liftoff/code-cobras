@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../security/AuthContext';
 
 export default function Navbar() {
+
+    //const auth = useContext(AuthProvider); // Access the context
+    const {isAuthenticated} = useAuth();
+//     let isVisible = false;
+//     if(!auth===undefined){
+//         if(auth.isAuthenticated){isVisible = true}
+//     }
+//     console.log(auth);
+ //console.log(isAuthenticated);
     return (
         <div>
             <nav className="navbar bg-dark sticky-top navbar-expand-lg bg-body-tertiary border-bottom border-3 border-success">
@@ -13,20 +23,21 @@ export default function Navbar() {
 
                     <div className="expand navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav nav-underline me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <a className="nav-link" href="/">Home</a>
-                            </li>
-                            <li className="nav-item">
+                            </li> */}
+                            {(isAuthenticated)   ? <li className="nav-item">
                                 <a className="nav-link" href="/favorites">My Favorites</a>
-                            </li>
-                            <li className="nav-item">
+                            </li> : <p></p>}
+                            {(isAuthenticated)   ? <li className="nav-item">
                                 <a className="nav-link" href="/compare">Compare</a>
-                            </li>
+                            </li>  : <p></p>}
                         </ul>
                     </div>
 
-                    <Link className="btn btn-success" to="/login" style={{margin:5}}>Login</Link>
-                    <Link className="btn btn-outline-success" to="/addprofile" style={{margin:5}}>Sign Up</Link>
+                    {(isAuthenticated)   ? <Link className="btn btn-success" to="/viewprofile" style={{margin:5}}>Profile</Link> : <p></p>}
+                    {(!isAuthenticated)   ? <Link className="btn btn-success" to="/login" style={{margin:5}}>Login</Link> : <p></p>}
+                    {(!isAuthenticated)   ? <Link className="btn btn-outline-success" to="/addprofile" style={{margin:5}}>Sign Up</Link> : <p></p>}
                 </div>
             </nav>
         </div>

@@ -18,6 +18,10 @@ import React from 'react'
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
+import { AuthProvider } from './security/AuthContext'
+
+import ProtectedRoute from './security/ProtectedRoute'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,12 +30,13 @@ function App() {
 
   return (
     <div className="App">
+      <AuthProvider>
       <Router>
         <Navbar/>
         <Routes>
           <Route exact path="/" element={<Home/>}></Route>
-          <Route exact path="/favorites" element={<Favorites/>}></Route>
-          <Route exact path="/compare" element={<Compare/>}></Route>
+          <Route exact path="/favorites" element={<ProtectedRoute><Favorites/></ProtectedRoute>}></Route>
+          <Route exact path="/compare" element={<ProtectedRoute><Compare/></ProtectedRoute>}></Route>
           <Route exact path="/viewprofile" element={<ViewProfile/>}></Route>
           <Route exact path="/addprofile" element={<AddProfile/>}></Route>
           <Route exact path="/editprofile/:id" element={<EditProfile/>}></Route>
@@ -45,7 +50,7 @@ function App() {
         
       </Router>
       
-        
+      </AuthProvider>   
 
     
       

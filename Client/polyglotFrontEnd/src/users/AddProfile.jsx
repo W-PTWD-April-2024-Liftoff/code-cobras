@@ -4,24 +4,49 @@ import { Link, useNavigate } from 'react-router-dom'
 
 export default function AddProfile() {
 
-    let navigate = useNavigate;
+    const [errorMsg,setErrorMsg] = useState ('');
+
+    let navigate = useNavigate();
     
     const [user,setUser]=useState({
         username:"",
         email:"",
-        bio:""
+        bio:"",
+        password:""
     });
 
-    const {username, email, bio}=user;
+    const {username, email, bio,password}=user;
 
     const onInputChange=(e)=>{
         setUser({...user,[e.target.name]:e.target.value});
     }
 
     const onSubmit= async(e)=>{
+
         e.preventDefault();
-        await axios.post("http://localhost:8080/addprofile", user);
-        navigate("/viewprofile");
+        try{
+            const response = await axios.post("http://localhost:8080/addprofile", user);
+            //console.log(response.status);
+            //alert(response.status)
+            //if (response.status === 302 || response.status === 301) {
+                // console.log(response.headers.get('Location'));
+                // navigate(response.headers.get('Location'));
+                //navigate("/viewprofile");
+              //} 
+              console.log(response);
+              if (response.data == "Success"){
+                navigate("/");
+              }
+              else {
+                setErrorMsg(response.data);
+              }
+            
+        }
+        
+        catch(error){
+            console.error('Error:',error);
+        }
+
     }
     
     return (
@@ -57,6 +82,20 @@ export default function AddProfile() {
                         required></input>
                     </div>
                 </div>
+
+                <div className="row">
+                    <div className="text-center mt-3">
+                        <label htmlFor="Password" className="form-label">Password</label>
+                        <input type={"password"} 
+                        className="form-control shadow" 
+                        placeholder="Enter your password" 
+                        name="password" 
+                        value={password}
+                        onChange={(e)=>onInputChange(e)}
+                        required></input>
+                    </div>
+                </div>
+                                
                 <div className="row">
                     <div className="text-center mt-5">
                         <label htmlFor="Bio" className="form-label">Bio</label>
