@@ -27,23 +27,21 @@ const LoginPage = () => {
 
         try {
             const response = await axios.post('http://localhost:8080/login', loginData);
-            //const token = response.data.token;
-            //localStorage.setItem('token', token);
-            //navigate("/home");
-            // Redirect to home page or other protected route
+
             if (response.status === 200){
                 console.log("completed!");
                 login();
                 navigate("/");
             }
             else {
+                console.log(response);
                 const errorData = await response.json()
                 setError(errorData.message || 'Login failed. Please retry!')
             }
            
         } catch (error) {
             // Handle error
-            setError('And error occurred. please retry')
+            setError('An error occurred. please retry')
         }
     };    
 
@@ -67,6 +65,7 @@ const LoginPage = () => {
            <button type="submit">Login</button>
        </form>
    </div> 
+   <p className='errorNotification'>{error}</p>
    </div>               
     );
 
