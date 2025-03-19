@@ -28,7 +28,7 @@ export default function EditProfile() {
     const onSubmit= async(e)=>{ 
         e.preventDefault();
         await axios.put(`http://localhost:8080/editprofile/${id}`, user);
-        navigate("/viewprofile");
+        //insert redirect to viewprofile here.
     }
 
     const loadUser = async ()=> {

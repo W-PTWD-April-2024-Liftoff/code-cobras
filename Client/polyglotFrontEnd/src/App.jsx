@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import api from './api/languages'
 import Navbar from './layout/Navbar'
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
@@ -11,10 +12,14 @@ import EditProfile from './users/EditProfile'
 import AddLanguage from './languages/AddLanguage'
 import ViewLanguage from './languages/ViewLanguage'
 import EditLanguage from './languages/EditLanguage'
+import MyLanguages from './languages/MyLanguages'
 
 import LoginPage from './pages/LoginPage'
 import CallbackPage from './pages/CallbackPage'
 import React from 'react'
+
+
+
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
@@ -24,9 +29,7 @@ import ProtectedRoute from './security/ProtectedRoute'
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  let id;
+  
 
   return (
     <div className="App">
@@ -40,20 +43,16 @@ function App() {
           <Route exact path="/viewprofile" element={<ViewProfile/>}></Route>
           <Route exact path="/addprofile" element={<AddProfile/>}></Route>
           <Route exact path="/editprofile/:id" element={<EditProfile/>}></Route>
-          <Route exact path="/viewlanguage" element={<ViewLanguage/>}></Route>
+          <Route exact path="/viewlanguage/:id" element={<ViewLanguage/>}></Route>
           <Route exact path="/addlanguage" element={<AddLanguage/>}></Route>
           <Route exact path="/editlanguage/:id" element={<EditLanguage/>}></Route>
-
+          <Route exact path="/languages" element={<MyLanguages/>}></Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/callback" element={<CallbackPage/>} />
-        </Routes>
-        
-      </Router>
-      
-      </AuthProvider>   
-
+        </Routes>        
+      </Router>      
+      </AuthProvider>          
     
-      
     </div>
   )
 }

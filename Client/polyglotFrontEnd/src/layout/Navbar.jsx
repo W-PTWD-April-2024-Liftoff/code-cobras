@@ -27,6 +27,9 @@ export default function Navbar() {
                                 <a className="nav-link" href="/">Home</a>
                             </li> */}
                             {(isAuthenticated)   ? <li className="nav-item">
+                                <a className="nav-link" href="/languages">My Languages</a>
+                            </li> : <p></p>}
+                            {(isAuthenticated)   ? <li className="nav-item">
                                 <a className="nav-link" href="/favorites">My Favorites</a>
                             </li> : <p></p>}
                             {(isAuthenticated)   ? <li className="nav-item">

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Route } from 'react-router-dom';
+import ViewProfile from './ViewProfile';
 
 export default function AddProfile() {
 
@@ -48,6 +50,7 @@ export default function AddProfile() {
         }
 
     }
+    
     
     return (
         <div className='container'>
