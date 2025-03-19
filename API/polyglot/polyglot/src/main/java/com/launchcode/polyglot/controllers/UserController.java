@@ -70,7 +70,7 @@ public class UserController {
         return userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
     }
 
-    @PutMapping("editprofile/{id}")
+    @PutMapping("/editprofile/{id}")
     public User editUser(@RequestBody User newUser, @PathVariable int id) {
         return userRepository.findById(id)
                 .map(user -> {
@@ -81,7 +81,7 @@ public class UserController {
                 }).orElseThrow(()->new UserNotFoundException(id));
     }
 
-    @DeleteMapping("viewprofile/{id}")
+    @DeleteMapping("/viewprofile/{id}")
     public String deleteUser(@PathVariable int id) {
         if (!userRepository.existsById(id)) {
             throw new UserNotFoundException(id);

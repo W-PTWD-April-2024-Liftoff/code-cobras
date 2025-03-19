@@ -39,6 +39,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers("/login").permitAll()
                     .requestMatchers("/addprofile").permitAll()
+                    .requestMatchers("/languages").permitAll()
+                    .requestMatchers("/addlanguage").permitAll()
                     .anyRequest().authenticated() //this requires authentication for all requests
             )
             .httpBasic(Customizer.withDefaults());

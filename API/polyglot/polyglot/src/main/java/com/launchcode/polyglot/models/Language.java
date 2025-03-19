@@ -15,18 +15,16 @@ public class Language {
 
     private String name;
     private String description;
-    private Boolean accessFlag;
+    private String accessFlag;
     private String username;
     //image
 
     //Constructor
-    public Language(int id, String name, String description) {
-        this.id = id;
+    public Language(String name, String description, String accessFlag, String username) {
         this.name = name;
         this.description = description;
-//        this.accessFlag = accessFlag;
-//        this.username = username;
-        //, Boolean accessFlag, String username
+        this.accessFlag = accessFlag;
+        this.username = username;
     }
 
     public Language() {
