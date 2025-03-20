@@ -32,35 +32,27 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/login").permitAll()
-                    .requestMatchers("/addprofile").permitAll()
-                    .requestMatchers("/languages").permitAll()
-                    .requestMatchers("/addlanguage").permitAll()
-                    .anyRequest().authenticated() //this requires authentication for all requests
-            )
-            .httpBasic(Customizer.withDefaults());
-//            .oauth2Login(oauth2 -> oauth2
-//                    .loginPage("/login")
-//                    .defaultSuccessUrl("/home", true)
-//            );
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/addprofile").permitAll()
+                        .requestMatchers("/languages").permitAll()
+                        .requestMatchers("/addlanguage").permitAll()
+                        .anyRequest().authenticated() //this requires authentication for all requests
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+
+
+                )
+                .httpBasic(Customizer.withDefaults());
+
         return http.build();
 
-
-//        return http
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(
-//                        auth -> auth
-//                                .requestMatchers("/login").permitAll()
-//                                .requestMatchers("/addprofile").permitAll()
-//                                .anyRequest().authenticated()
-//                )
-//                .httpBasic(Customizer .withDefaults())
-//                .build();
 
     }
     @Bean
