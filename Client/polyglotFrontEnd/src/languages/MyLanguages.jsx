@@ -6,7 +6,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 export default function MyLanguages() {
 
     const {id} = useParams();
-    //const cors = require('cors');
 
     //Allows for navigate and redirection after an event. 
     let navigate = useNavigate;
@@ -14,31 +13,47 @@ export default function MyLanguages() {
     const [languages,setLanguages] = useState([]);
 
     useEffect(()=>{
-        
         loadLanguages();
-    },[]);
+        console.log(typeof languages); //testing
+        console.log(languages[0]); //testing
+        
+        
+        
+    }, []);
 
     const loadLanguages = async () => {
-        try {
-        const result = await api.get("/languages", id);
-        setLanguages(result.data);
-        } catch (error) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-        }
-    };
+        let username = "Foxfyyre"
+        try{
+            const result = await api.get(`/languages`, {
+                params: "Foxfyyre" //replace with user objects username parameter                
+            })
+            if (result && result.data) {setLanguages(result.data);
+                console.log(typeof languages); //testing
+                console.log(languages[0]);
+            }
+        } catch(error) {
+            console.log(error.message);
+        }  
+    }
 
-    // const deleteLanguage = async (id) => {
-    //     await axios.delete(`http://localhost:8080/viewlanguage/${id}`)
-    //     navigate("/languages");
-    // }
+    const deleteLanguage = async (id) => {
+        try{
+            //add popup to confirm deletion
+            await api.delete(`http://localhost:8080/viewlanguage/${id}`);
+        } catch (error) {
+            console.log(error.message);
+        }
+        navigate("/languages");
+    }
 
     return (       
         <div className='container'>
             <div className=''>
                 <h1>My Languages</h1>
             </div>
+            <br></br>
+            <br></br>
+            <Link className="btn btn-outline-success mx-2" to={`/addlanguage`}>Add a new language!</Link>
             <br></br>
             <br></br>
             <div className='py-4'>
@@ -67,38 +82,36 @@ export default function MyLanguages() {
                     </tbody>
                         
                 </table>
-                
+                <table>
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <script>
+                        { languages && languages.map((language,index) => (
+                            <tr>
+                                <th scope="row" key={index}>{index+1}</th>
+                                <td>{language.name}</td>
+                                <td>{language.description}</td>
+                                <td>
+                                    <Link className="btn btn-success mx-2" to={`/viewlanguage/${language.id}`}>View</Link>
+                                    <Link className="btn btn-outline-success mx-2" to={`/editlanguage/${language.id}`}>Edit</Link>
+                                    <button className="btn btn-outline-danger mx-2" onClick={() => deleteLanguage(language.id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))
+                        } 
+                                                 
+                        </script>
+                    </tbody>
+                </table>      
             </div>
-            <p>Language buttons for now: access only.</p>
-            <Link className="btn btn-outline-success mx-2" to={`/addlanguage`}>Add</Link>
+            
+            
+            <br></br>
+            <br></br>
+            <p>Edit button for temporary access only.</p>
             <Link className="btn btn-outline-success mx-2" to={`/editlanguage/`}>Edit</Link>
         </div>
     )
 };
-
-
-{/* <table>
-    <thead>
-
-    </thead>
-    <tbody>
-        <script>
-        if (languages) {languages.map((language,index) => (
-            <tr>
-                <th scope="row" key={index}>{index+1}</th>
-                <td>{language.name}</td>
-                <td>{language.description}</td>
-                <td>
-                    <Link className="btn btn-success mx-2" to={`/viewlanguage/${language.id}`}>View</Link>
-                    <Link className="btn btn-outline-success mx-2" to={`/editlanguage/${language.id}`}>Edit</Link>
-                    <button className="btn btn-outline-danger mx-2" onClick={() => deleteLanguage(language.id)}>Delete</button>
-                </td>
-            </tr>
-        ))
-        } else {
-            <p>No Languages to display.</p>
-        }
-            
-        </script>
-    </tbody>
-</table> */}

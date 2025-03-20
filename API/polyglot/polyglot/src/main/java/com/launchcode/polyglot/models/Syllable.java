@@ -27,4 +27,7 @@ public class Syllable {
         this.codaRequiredLength = codaRequiredLength;
     }
 
+    //Default no-arg constructor
+    public Syllable() {}
+
 }

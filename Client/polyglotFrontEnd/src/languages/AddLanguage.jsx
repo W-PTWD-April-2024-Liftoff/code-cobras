@@ -18,11 +18,12 @@ export default function AddLanguage() {
     });
     
     const [languageVowels,setLanguageVowels]=useState({
-        i:""
+        i:"",
+        y:""
     })
 
     const [languageConsonants,setLanguageConsonants]=useState({
-        p:""
+        
     })
 
     const [languageSounds, setLanguageSounds]=useState({
@@ -30,8 +31,7 @@ export default function AddLanguage() {
     })
 
     const {name, description, accessFlag, username}=language;
-    const {i}=languageVowels
-    const {p}=languageConsonants
+    const {i, y}=languageVowels
 
     const onInputChange=(e)=>{
         setLanguage({...language,[e.target.name]:e.target.value});
@@ -50,24 +50,15 @@ export default function AddLanguage() {
         } else if (e.target.id === "consonant") {
             setLanguageConsonants({...languageConsonants,[e.target.name]:e.target.id})
         }
-        // e.target.style.color = "table-cell-color blue";
-        // e.target.className ="table-cell-color blue";
     }
 
     const onSubmit= async(e)=>{
         e.preventDefault();
         try {
             const response = await api.post("http://localhost:8080/addlanguage", language);
-            setLanguage(response.data);
+            console.log(response.data);
+            console.log(response.response) 
             navigate("/languages");
-            // fetch("http://localhost:8080/api/addlanguage", {  // :white_check_mark: Correct Port
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify({ name: "Test", description: "Test Language" })
-            //   })
-            //   .then(response => response.json())
-            //   .then(data => console.log("Success:", data))
-            //   .catch(error => console.error("Error:", error));
         } catch(error) {
             console.log(`Error: ${error.message}`);
         }
@@ -77,7 +68,7 @@ export default function AddLanguage() {
         <div className='row shadow'>
             <h1>Add New Language</h1>
             <form onSubmit={(e)=> onSubmit(e)}>
-                <div className="row">
+                <div className="row w-50 position-relative start-50 translate-middle-x">
                     <div className="text-center mt-5">
                         <label htmlFor="Name" className="form-label">Language name</label>
                         <input type={"text"} 
@@ -90,16 +81,29 @@ export default function AddLanguage() {
                         autoFocus="true"></input>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row w-50 position-relative start-50 translate-middle-x">
+                    <div className="text-center mt-3">
+                        <label htmlFor="Name" className="form-label">Username</label>
+                        <input type={"text"} 
+                        className="form-control shadow" 
+                        placeholder="Enter your username" 
+                        name="username" 
+                        value={username}
+                        onChange={(e)=>onInputChange(e)}
+                        required></input>
+                    </div>
+                </div>
+                <div className="row w-75 position-relative start-50 translate-middle-x">
                     <div className="text-center mt-3">
                         <label htmlFor="Description" className="form-label">Language Description</label>
-                        <input type={"text"} 
+                        <textarea type={"text"} 
+                        rows="4"
                         className="form-control shadow" 
                         placeholder="Enter a description of your language" 
                         name="description" 
                         value={description}
                         onChange={(e)=>onInputChange(e)}
-                        required></input>
+                        required></textarea>
                     </div>
                 </div>
                 <br></br>
@@ -111,7 +115,7 @@ export default function AddLanguage() {
                             type="radio" 
                             name="accessFlag" 
                             onChange={(e)=>onRadioChange(e)} 
-                            value={accessFlag}
+                            defaultChecked={accessFlag}
                             id="public"/>
                         </label>
                         
@@ -122,7 +126,7 @@ export default function AddLanguage() {
                             type="radio" 
                             name="accessFlag" 
                             onChange={(e)=>onRadioChange(e)} 
-                            value={accessFlag}
+                            defaultChecked={accessFlag}
                             id="private"/>
                         </label>
                     </div>
@@ -144,16 +148,26 @@ export default function AddLanguage() {
                         <tbody>
                             <tr>
                                 <th>Close</th>
-                                <td><label className="form-check-label" htmlFor="flexCheckChecked">i 
-                                    <input className="form-check-input" 
+                                {/* <td>
+                                <input className="form-check-input" 
                                         type="checkbox" 
                                         name="i" 
-                                        onChange={(e)=>onSoundSelect(e)} 
-                                        value={i}
+                                        defaultChecked={i}
                                         id="vowel"/>
-                        </label></td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">i 
+                                    </label>
+                                    </td> */}
+                                <td>i</td>
                                 <td></td>
-                                <td>y</td>
+                                {/* <td><label className="btn btn-outline-primary" htmlFor="btn-check-outlined">y
+                                    <input type="checkbox" 
+                                        className="btn-check"
+                                        name='y'
+                                        defaultChecked={y} 
+                                        id="btn-check-primary"
+                                        autoComplete="off">
+                                        </input></label></td> */}
+                                        <td>y</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -302,14 +316,7 @@ export default function AddLanguage() {
                         <tbody>
                             <tr>
                                 <th>Plosive</th>
-                                <td><label className="form-check-label" htmlFor="flexCheckChecked">p
-                                    <input className="form-check-input" 
-                                        type="checkbox" 
-                                        name="p" 
-                                        onChange={(e)=>onSoundSelect(e)} 
-                                        value={p}
-                                        id="consonant"/>
-                                    </label></td>
+                                <td>p</td>
                                 <td>b</td>
                                 <td></td>
                                 <td></td>
