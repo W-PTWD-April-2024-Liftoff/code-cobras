@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Filter() {
     return (
-        <div className='fixed-left w-25'>
+        <div className="offcanvas-lg offcanvas-start sticky-left" id="bdSidebar" aria-labelledby="bdSidebarOffcanvasLabel">
             <h1>Filter will exist here</h1>
             <ul>
                 <li>Filter item 1 </li>

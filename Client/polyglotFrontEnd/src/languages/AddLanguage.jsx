@@ -2,7 +2,6 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import api from '../api/languages';
 
 export default function AddLanguage() {
@@ -57,7 +56,6 @@ export default function AddLanguage() {
         try {
             const response = await api.post("http://localhost:8080/addlanguage", language);
             console.log(response.data);
-            console.log(response.response) 
             navigate("/languages");
         } catch(error) {
             console.log(`Error: ${error.message}`);

@@ -53,9 +53,12 @@ public class PolyglotApplication {
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/login").permitAll()
+						.requestMatchers("/*").permitAll()
 						.requestMatchers("/addprofile").permitAll()
 						.requestMatchers("/languages").permitAll()
 						.requestMatchers("/addlanguage").permitAll()
+						.requestMatchers("/viewlanguage").permitAll()
+						.requestMatchers("/deletelanguage/*").permitAll()
 						.anyRequest().authenticated() //this requires authentication for all requests
 				)
 				.httpBasic(Customizer.withDefaults());

@@ -10,4 +10,5 @@ import java.util.List;
 public interface LanguageRepository extends CrudRepository<Language, Integer> {
     Language findByName(String name);
     List<Language> findAll();
+    List<Language> findAllByUsername(String username);
 }

@@ -5,16 +5,18 @@ import com.launchcode.polyglot.models.Language;
 import com.launchcode.polyglot.models.data.LanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin(origins = "http://localhost:5173",
-        //allowMethods = {"GET, POST, PUT, DELETE"},
         allowCredentials = "true",
         maxAge = 10000)
 @RestController
@@ -42,22 +44,30 @@ public class LanguageController {
 
     @GetMapping("/languages")
     public ResponseEntity<List<Language>> getAllLanguagesByUsername(@RequestParam(required = false) String username) {
-        Iterable<Language> allLanguages = languageRepository.findAll();
-        List<Language> listLanguages = new ArrayList<>();
+        List<Language> allLanguages = languageRepository.findAll();
         List<Language> returnList = new ArrayList<>();
-        allLanguages.forEach(listLanguages::add);
-
-        for (Language language : allLanguages) { //adds all languages by X username to returnList
-            if (language.getUsername().contentEquals(username)) {
-                returnList.add(language);
-            }
+        if (username != null && !username.isEmpty()) {
+            returnList = allLanguages.stream()
+                    .filter(language -> language.getUsername().equals(username))
+                    .collect(Collectors.toList());
+        } else {
+            returnList = allLanguages;
         }
+
         if (returnList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else if (!returnList.isEmpty()){
+        } else {
             return ResponseEntity.ok(returnList);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/viewlanguage")
+    public ResponseEntity<Optional<Language>> getLanguage(@RequestParam(required = true) int id) {
+        Optional<Language> returnLanguage = languageRepository.findById(id);
+        if (returnLanguage.isPresent() && returnLanguage.get().getAccessFlag().equals("public")) {
+            return ResponseEntity.ok(returnLanguage);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/editlanguage/{id}")
@@ -71,12 +81,12 @@ public class LanguageController {
                 }).orElseThrow(()->new LanguageNotFoundException(id));
     }
 
-    @DeleteMapping("/viewlanguage/{id}")
-    public String deleteLanguage(@PathVariable int id) {
+    @DeleteMapping("/deletelanguage/{id}")
+    public ResponseEntity<String> deleteLanguage(@PathVariable int id) {
         if (!languageRepository.existsById(id)) {
             throw new LanguageNotFoundException(id);
         }
         languageRepository.deleteById(id);
-        return "Language with id "+id+" has been deleted successfully.";
+        return ResponseEntity.ok("Delete Successful");
     }
 }
