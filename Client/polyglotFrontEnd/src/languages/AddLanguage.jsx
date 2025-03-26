@@ -23,19 +23,105 @@ export default function AddLanguage() {
     
     const [languageVowels,setLanguageVowels]=useState({
         i:"",
-        y:""
+        y:"",
+        ɪ:"",
+        ʏ:"",
+        e:"",
+        ø:"",
+        ɛ:"",
+        œ:"",
+        æ:"",
+        a:'',
+        ɨ:"",
+        ʉ:'',
+        ɘ:"",
+        ɵ:"",
+        ə:"",
+        ɜ:"",
+        ɞ:"",
+        ɐ:"",
+        ä:"",
+        ɯ:"",
+        u:"",
+        ʊ:"",
+        ɤ:"",
+        o:"",
+        ʌ:"",
+        ɔ:"",
+        ɑ:"",
+        ɒ:""
     })
 
-    const [languageConsonants,setLanguageConsonants]=useState({
-        
-    })
+    const [languageConsonants, setLanguageConsonants] = useState({
+        p: "",
+        b: "",
+        m: "",
+        ɸ: "",
+        β: "",
+        f: "",
+        v: "",
+        θ: "",
+        ð: "",
+        t: "",
+        d: "",
+        n: "",
+        s: "",
+        z: "",
+        ʃ: "",
+        ʒ: "",
+        ʂ: "",
+        ʐ: "",
+        ʈ: "",
+        ɖ: "",
+        ɳ: "",
+        ɲ: "",
+        ŋ: "",
+        ɴ: "",
+        ʈ̠: "",
+        ʁ: "",
+        ʔ: "",
+        ɾ: "",
+        ɽ: "",
+        ʙ: "",
+        r: "",
+        ʀ: "",
+        l: "",
+        ɹ: "",
+        j: "",
+        w: "",
+        h: "",
+        ɦ: "",
+        ʕ: "",
+        ʧ: "",
+        ʤ: "",
+        tʃ: "",
+        dʒ: "",
+        ʍ: "",
+        ɫ: "",
+        ʎ: "",
+        c: "",
+        ɟ: "",
+        k: "",
+        g: "",
+        q: "",
+        ɢ: "",
+        ɱ: "",
+        ç: "",
+        ʝ: "",
+        x: "",
+        ɣ: "",
+        χ: "",
+        ħ: "",
+        ɬ: "",
+        ɮ: "",
+        ʋ: ""
+    });
 
-    const [languageSounds, setLanguageSounds]=useState({
-
-    })
+    const [languageSounds, setLanguageSounds]=useState({});
 
     const {name, description, accessFlag, username}=language;
-    const {i, y}=languageVowels
+    const {i, y, ɪ, ʏ, e, ø, ɛ, œ, æ, a, ɨ, ʉ, ɘ, ɵ, ə, ɜ, ɞ, ɐ, ä, ɯ, u, ʊ, ɤ, o, ʌ, ɔ, ɑ, ɒ}=languageVowels;
+    const {p, b, m, ɸ, β, f, v, θ, ð, t, d, n, s, z, ʃ, ʒ, ʂ, ʐ, ʈ, ɖ, ɳ, ɲ, ŋ, ɴ, ʈ̠, ʁ, ʔ, ɾ, ɽ, ʙ, r, ʀ, l, ɹ, j, w, h, ɦ, ʕ, ʧ, ʤ, tʃ, dʒ, ʍ, ɫ, ʎ, c, ɟ, k, g, q, ɢ, ɱ, ç, ʝ, x, ɣ, χ, ħ, ɬ, ɮ, ʋ} = languageConsonants;
 
     const onInputChange=(e)=>{
         setLanguage({...language,[e.target.name]:e.target.value});
@@ -135,6 +221,7 @@ export default function AddLanguage() {
                     </div>
                 </div>
                 <br></br>
+
                 <div className="row">
                     <h4>Vowel selection</h4>
                     <table className="table table-striped border shadow border">
@@ -151,53 +238,90 @@ export default function AddLanguage() {
                         <tbody>
                             <tr>
                                 <th>Close</th>
-                                {/* <td>
-                                <input className="form-check-input" 
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">i</label> 
+                                    <input className="form-check-input" 
                                         type="checkbox" 
                                         name="i" 
                                         defaultChecked={i}
-                                        id="vowel"/>
-                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">i 
-                                    </label>
-                                    </td> */}
-                                <td>i</td>
+                                        id="vowel"/></td>
                                 <td></td>
-                                {/* <td><label className="btn btn-outline-primary" htmlFor="btn-check-outlined">y
-                                    <input type="checkbox" 
-                                        className="btn-check"
-                                        name='y'
-                                        defaultChecked={y} 
-                                        id="btn-check-primary"
-                                        autoComplete="off">
-                                        </input></label></td> */}
-                                        <td>y</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">y</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="y" 
+                                        defaultChecked={y}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɨ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɨ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɨ" 
+                                        defaultChecked={ɨ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>ʉ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʉ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ʉ" 
+                                        defaultChecked={ʉ}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɯ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɯ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɯ" 
+                                        defaultChecked={ɯ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>u</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">u</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="u" 
+                                        defaultChecked={u}
+                                        id="vowel"/></td>
                             </tr>
                             <tr>
                                 <th>Near-Close</th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɪ</td>
-                                <td>ʏ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɪ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɪ" 
+                                        defaultChecked={ɪ}
+                                        id="vowel"/></td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʏ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ʏ" 
+                                        defaultChecked={ʏ}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ʊ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʊ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ʊ" 
+                                        defaultChecked={ʊ}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -206,19 +330,55 @@ export default function AddLanguage() {
                                 <th>Close-Mid</th>
                                 <td></td>
                                 <td></td>
-                                <td>e</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">e</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="e" 
+                                        defaultChecked={e}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>ø</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ø</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ø" 
+                                        defaultChecked={ø}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɘ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɘ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɘ" 
+                                        defaultChecked={ɘ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>ɵ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɵ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɵ" 
+                                        defaultChecked={ɵ}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɤ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɤ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɤ" 
+                                        defaultChecked={ɤ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>o</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">o</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="o" 
+                                        defaultChecked={o}
+                                        id="vowel"/></td>
                             </tr>
                             <tr>
                                 <th>Mid</th>
@@ -229,7 +389,13 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ə</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ə</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ə" 
+                                        defaultChecked={ə}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -243,18 +409,54 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɛ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɛ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɛ" 
+                                        defaultChecked={ɛ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>œ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">œ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="œ" 
+                                        defaultChecked={œ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>ɜ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɜ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɜ" 
+                                        defaultChecked={ɜ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>ɞ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɞ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɞ" 
+                                        defaultChecked={ɞ}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
-                                <td>ʌ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʌ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ʌ" 
+                                        defaultChecked={ʌ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>ɔ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɔ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɔ" 
+                                        defaultChecked={ɔ}
+                                        id="vowel"/></td>
                             </tr>
                             <tr>
                                 <th>Near-Open</th>
@@ -263,11 +465,23 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>æ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">æ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="æ" 
+                                        defaultChecked={æ}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɐ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɐ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɐ" 
+                                        defaultChecked={ɐ}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -282,21 +496,46 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>a</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">a</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="a" 
+                                        defaultChecked={a}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
-                                <td>ä</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ä</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ä" 
+                                        defaultChecked={ä}
+                                        id="vowel"/></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɑ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɑ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɑ" 
+                                        defaultChecked={ɑ}
+                                        id="vowel"/></td>
                                 <td></td>
-                                <td>ɒ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɒ</label> 
+                                    <input className="form-check-input" 
+                                        type="checkbox" 
+                                        name="ɒ" 
+                                        defaultChecked={ɒ}
+                                        id="vowel"/></td>
                             </tr>
                         </tbody>
                         
                     </table>
 
                 </div>
+
                 <div className="row">
                     <h4>Consonant Selection</h4>
                     <table className="table table-striped border shadow border">
@@ -319,49 +558,109 @@ export default function AddLanguage() {
                         <tbody>
                             <tr>
                                 <th>Plosive</th>
-                                <td>p</td>
-                                <td>b</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">p</label>
+                                    <input className="form-check-input" type="checkbox" name="p" defaultChecked={p} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">b</label>
+                                    <input className="form-check-input" type="checkbox" name="b" defaultChecked={b} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>t</td>
-                                <td>d</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">t</label>
+                                    <input className="form-check-input" type="checkbox" name="t" defaultChecked={t} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">d</label>
+                                    <input className="form-check-input" type="checkbox" name="d" defaultChecked={d} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
-                                <td>ʈ</td>
-                                <td>ɖ</td>
-                                <td>c</td>
-                                <td>ɟ</td>
-                                <td>k</td>
-                                <td>g</td>
-                                <td>q</td>
-                                <td>ɢ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʈ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʈ" defaultChecked={ʈ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɖ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɖ" defaultChecked={ɖ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">c</label>
+                                    <input className="form-check-input" type="checkbox" name="c" defaultChecked={c} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɟ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɟ" defaultChecked={ɟ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">k</label>
+                                    <input className="form-check-input" type="checkbox" name="k" defaultChecked={k} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">g</label>
+                                    <input className="form-check-input" type="checkbox" name="g" defaultChecked={g} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">q</label>
+                                    <input className="form-check-input" type="checkbox" name="q" defaultChecked={q} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɢ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɢ" defaultChecked={ɢ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
-                                <td>ʔ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʔ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʔ" defaultChecked={ʔ} id="consonant"/>
+                                </td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <th>Nasal</th>
                                 <td></td>
-                                <td>m</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">m</label>
+                                    <input className="form-check-input" type="checkbox" name="m" defaultChecked={m} id="consonant"/>
+                                </td>
                                 <td></td>
-                                <td>ɱ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɱ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɱ" defaultChecked={ɱ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>n</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">n</label>
+                                    <input className="form-check-input" type="checkbox" name="n" defaultChecked={n} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɳ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɳ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɳ" defaultChecked={ɳ} id="consonant"/>
+                                </td>
                                 <td></td>
-                                <td>ɲ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɲ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɲ" defaultChecked={ɲ} id="consonant"/>
+                                </td>
                                 <td></td>
-                                <td>ŋ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ŋ</label>
+                                    <input className="form-check-input" type="checkbox" name="ŋ" defaultChecked={ŋ} id="consonant"/>
+                                </td>
                                 <td></td>
-                                <td>ɴ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɴ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɴ" defaultChecked={ɴ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -370,13 +669,19 @@ export default function AddLanguage() {
                             <tr>
                                 <th>Trill</th>
                                 <td></td>
-                                <td>ʙ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʙ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʙ" defaultChecked={ʙ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>r</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">r</label>
+                                    <input className="form-check-input" type="checkbox" name="r" defaultChecked={r} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -386,7 +691,10 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ʀ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʀ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʀ" defaultChecked={ʀ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -401,13 +709,17 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɾ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɾ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɾ" defaultChecked={ɾ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɽ</td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɽ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɽ" defaultChecked={ɽ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -419,28 +731,94 @@ export default function AddLanguage() {
                             </tr>
                             <tr>
                                 <th>Fricative</th>
-                                <td>ɸ</td>
-                                <td>β</td>
-                                <td>f</td>
-                                <td>v</td>
-                                <td>θ</td>
-                                <td>ð</td>
-                                <td>s</td>
-                                <td>z</td>
-                                <td>ʃ</td>
-                                <td>ʒ</td>
-                                <td>ʂ</td>
-                                <td>ʐ</td>
-                                <td>ç</td>
-                                <td>ʝ</td>
-                                <td>x</td>
-                                <td>ɣ</td>
-                                <td>χ</td>
-                                <td>ʁ</td>
-                                <td>ħ</td>
-                                <td>ʕ</td>
-                                <td>h</td>
-                                <td>ɦ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɸ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɸ" defaultChecked={ɸ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">β</label>
+                                    <input className="form-check-input" type="checkbox" name="β" defaultChecked={β} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">f</label>
+                                    <input className="form-check-input" type="checkbox" name="f" defaultChecked={f} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">v</label>
+                                    <input className="form-check-input" type="checkbox" name="v" defaultChecked={v} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">θ</label>
+                                    <input className="form-check-input" type="checkbox" name="θ" defaultChecked={θ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ð</label>
+                                    <input className="form-check-input" type="checkbox" name="ð" defaultChecked={ð} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">s</label>
+                                    <input className="form-check-input" type="checkbox" name="s" defaultChecked={s} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">z</label>
+                                    <input className="form-check-input" type="checkbox" name="z" defaultChecked={z} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʃ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʃ" defaultChecked={ʃ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʒ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʒ" defaultChecked={ʒ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʂ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʂ" defaultChecked={ʂ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʐ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʐ" defaultChecked={ʐ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ç</label>
+                                    <input className="form-check-input" type="checkbox" name="ç" defaultChecked={ç} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʝ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʝ" defaultChecked={ʝ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">x</label>
+                                    <input className="form-check-input" type="checkbox" name="x" defaultChecked={x} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɣ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɣ" defaultChecked={ɣ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">χ</label>
+                                    <input className="form-check-input" type="checkbox" name="χ" defaultChecked={χ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʁ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʁ" defaultChecked={ʁ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ħ</label>
+                                    <input className="form-check-input" type="checkbox" name="ħ" defaultChecked={ħ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʕ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʕ" defaultChecked={ʕ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">h</label>
+                                    <input className="form-check-input" type="checkbox" name="h" defaultChecked={h} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɦ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɦ" defaultChecked={ɦ} id="consonant"/>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Lateral Fricative</th>
@@ -450,13 +828,14 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɬ</td>
-                                <td>ɮ</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɬ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɬ" defaultChecked={ɬ} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɮ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɮ" defaultChecked={ɮ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -472,20 +851,28 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ʋ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʋ</label>
+                                    <input className="form-check-input" type="checkbox" name="ʋ" defaultChecked={ʋ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɹ</td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɹ</label>
+                                    <input className="form-check-input" type="checkbox" name="ɹ" defaultChecked={ɹ} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>ɻ</td>
-                                <td></td>
-                                <td>j</td>
-                                <td></td>
-                                <td>ɰ</td>
-                                <td></td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">j</label>
+                                    <input className="form-check-input" type="checkbox" name="j" defaultChecked={j} id="consonant"/>
+                                </td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">w</label>
+                                    <input className="form-check-input" type="checkbox" name="w" defaultChecked={w} id="consonant"/>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -500,16 +887,13 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td>
+                                    <label className="form-check-label w-100" htmlFor="flexCheckChecked">l</label>
+                                    <input className="form-check-input" type="checkbox" name="l" defaultChecked={l} id="consonant"/>
+                                </td>
                                 <td></td>
-                                <td>l</td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td>ɭ</td>
-                                <td></td>
-                                <td>ʎ</td>
-                                <td></td>
-                                <td>ʟ</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -517,9 +901,9 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td></td>
                             </tr>
-
                         </tbody>
                     </table>
+
                 </div>
                 <button type="submit" className="btn btn-outline-primary m-4 shadow">Submit</button>
                 <Link className="btn btn-outline-danger m-4 shadow" to="/languages">Cancel</Link>

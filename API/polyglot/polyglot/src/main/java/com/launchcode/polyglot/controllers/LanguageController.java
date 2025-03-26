@@ -64,7 +64,8 @@ public class LanguageController {
     @GetMapping("/viewlanguage")
     public ResponseEntity<Optional<Language>> getLanguage(@RequestParam(required = true) int id) {
         Optional<Language> returnLanguage = languageRepository.findById(id);
-        if (returnLanguage.isPresent() && returnLanguage.get().getAccessFlag().equals("public")) {
+        String accessFlag = returnLanguage.get().getAccessFlag();
+        if (accessFlag != null && accessFlag.equals("public")) {
             return ResponseEntity.ok(returnLanguage);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

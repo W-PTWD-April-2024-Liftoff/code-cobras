@@ -25,8 +25,8 @@ public class Comment {
         this.comment = comment;
         this.accessFlag = accessFlag;
     }
-public Comment() {
+    public Comment() {
 
-}
+    }
 
 }

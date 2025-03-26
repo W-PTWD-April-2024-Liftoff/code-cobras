@@ -123,14 +123,37 @@ export default function MyLanguages() {
             <br></br>
             <br></br>
 
-            <div id="deletePopup" className=''>                   
+            <div id="deletePopup" className=''>
                 {/* Confirmation Popup */}
                 {showPopup && (
-                    <div style={overlayStyle}>
-                    <div style={popupStyle}>
-                        <p>Are you sure you want to delete this item?</p>
-                        <button onClick={confirmDelete}>Yes, Delete</button>
-                        <button onClick={cancelDelete}>Cancel</button>
+                    <div
+                    className="modal show d-block"
+                    tabIndex="-1"
+                    style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+                    >
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-center w-100">Confirm Deletion</h5>
+                            <button
+                            type="button"
+                            className="btn-close"
+                            onClick={cancelDelete}
+                            aria-label="Close"
+                            ></button>
+                        </div>
+                        <div className="modal-body text-center">
+                            <p>Are you sure you want to delete this item?</p>
+                        </div>
+                        <div className="modal-footer d-flex justify-content-center">
+                            <button type="button" className="btn btn-danger mx-2" onClick={confirmDelete}>
+                            Yes, Delete
+                            </button>
+                            <button type="button" className="btn btn-secondary mx-2" onClick={cancelDelete}>
+                            Cancel
+                            </button>
+                        </div>
+                        </div>
                     </div>
                     </div>
                 )}
