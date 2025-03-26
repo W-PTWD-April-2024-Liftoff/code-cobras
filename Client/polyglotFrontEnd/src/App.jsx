@@ -44,7 +44,7 @@ function App() {
           <Route exact path="/addprofile" element={<AddProfile/>}></Route>
           <Route exact path="/editprofile/:id" element={<EditProfile/>}></Route>
           <Route exact path="/viewlanguage" element={<ViewLanguage/>}></Route>
-          <Route exact path="/addlanguage" element={<AddLanguage/>}></Route>
+          <Route exact path="/addlanguage" element={<ProtectedRoute><AddLanguage/></ProtectedRoute>}></Route>
           <Route exact path="/editlanguage" element={<EditLanguage/>}></Route>
           <Route exact path="/languages" element={<MyLanguages/>}></Route>
           <Route path="/login" element={<LoginPage />} />
