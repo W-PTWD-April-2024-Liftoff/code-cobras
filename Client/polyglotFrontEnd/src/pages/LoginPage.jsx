@@ -30,7 +30,8 @@ const LoginPage = () => {
 
             if (response.status === 200){
                 console.log("completed!");
-                login();
+                console.log(response.data);
+                login(response.data);
                 navigate("/");
             }
             else {

@@ -58,7 +58,8 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
             }
             session.setAttribute("user", newUser.getUsername());
-            return ResponseEntity.ok("Login was successful!");
+            //return ResponseEntity.ok("Login was successful!");
+            return ResponseEntity.ok(user.getUsername());
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unknown error occurred");

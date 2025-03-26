@@ -3,10 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/languages';
+import { useAuth } from '../security/AuthContext';
+
+
 
 export default function AddLanguage() {
     
     let navigate = useNavigate();
+    const {loggedInUser} = useAuth();
+    
 
     const [errorMsg,setErrorMsg]=useState('');
     const [language,setLanguage]=useState({
@@ -86,7 +91,7 @@ export default function AddLanguage() {
                         className="form-control shadow" 
                         placeholder="Enter your username" 
                         name="username" 
-                        value={username}
+                        value={loggedInUser}
                         onChange={(e)=>onInputChange(e)}
                         required></input>
                     </div>
