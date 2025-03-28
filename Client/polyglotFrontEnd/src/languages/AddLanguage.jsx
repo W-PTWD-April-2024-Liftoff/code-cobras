@@ -20,6 +20,7 @@ export default function AddLanguage() {
         accessFlag:"",
         username:""
     });
+    const [image, setImage] = useState(null);
     
     const [languageVowels,setLanguageVowels]=useState({
         i:"",
@@ -122,6 +123,7 @@ export default function AddLanguage() {
     const {name, description, accessFlag, username}=language;
     const {i, y, ɪ, ʏ, e, ø, ɛ, œ, æ, a, ɨ, ʉ, ɘ, ɵ, ə, ɜ, ɞ, ɐ, ä, ɯ, u, ʊ, ɤ, o, ʌ, ɔ, ɑ, ɒ}=languageVowels;
     const {p, b, m, ɸ, β, f, v, θ, ð, t, d, n, s, z, ʃ, ʒ, ʂ, ʐ, ʈ, ɖ, ɳ, ɲ, ŋ, ɴ, ʈ̠, ʁ, ʔ, ɾ, ɽ, ʙ, r, ʀ, l, ɹ, j, w, h, ɦ, ʕ, ʧ, ʤ, tʃ, dʒ, ʍ, ɫ, ʎ, c, ɟ, k, g, q, ɢ, ɱ, ç, ʝ, x, ɣ, χ, ħ, ɬ, ɮ, ʋ} = languageConsonants;
+    
 
     const onInputChange=(e)=>{
         setLanguage({...language,[e.target.name]:e.target.value});
@@ -142,13 +144,44 @@ export default function AddLanguage() {
         }
     }
 
-    const onSubmit= async(e)=>{
+    const onImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+        }
+    }
+
+    // const onSubmit= async(e)=>{
+    //     e.preventDefault();
+    //     try {
+    //         const response = await api.post("http://localhost:8080/addlanguage", language);
+    //         console.log(response.data);
+    //         navigate("/languages");
+    //     } catch(error) {
+    //         console.log(`Error: ${error.message}`);
+    //     }
+    // }
+    const onSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('name', language.name);
+        formData.append('description', language.description);
+        formData.append('accessFlag', language.accessFlag);
+        formData.append('username', language.username);
+        if (image) {
+            formData.append('image', image); 
+        }
+
         try {
-            const response = await api.post("http://localhost:8080/addlanguage", language);
+            const response = await api.post("http://localhost:8080/addlanguage", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', 
+                }
+            });
             console.log(response.data);
             navigate("/languages");
-        } catch(error) {
+        } catch (error) {
             console.log(`Error: ${error.message}`);
         }
     }
@@ -168,6 +201,15 @@ export default function AddLanguage() {
                         onChange={(e)=>onInputChange(e)}
                         required 
                         autoFocus="true"></input>
+                    </div>
+                </div>
+                <div className="row w-75 position-relative start-50 translate-middle-x">
+                    <div className="text-center mt-3">
+                        <label htmlFor="Image" className="form-label">Upload an Image (optional)</label>
+                        <input type="file"
+                            className="form-control shadow"
+                            name="image"
+                            onChange={(e) => onImageChange(e)} />
                     </div>
                 </div>
                 <div className="row w-50 position-relative start-50 translate-middle-x">

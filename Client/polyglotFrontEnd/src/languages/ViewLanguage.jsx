@@ -63,7 +63,7 @@ export default function ViewLanguage() {
     return (
         <div>
             <div className='d-flex justify-content-start m-4'>
-                <Link className="btn btn-outline-danger ms-0" onClick={handleBackButton}>Back</Link>     
+                <Link className="btn btn-outline-secondary ms-0" onClick={handleBackButton}>Back</Link>     
             </div>
                 
             <div className="m-5 p-2 shadow border-2 rounded" >
