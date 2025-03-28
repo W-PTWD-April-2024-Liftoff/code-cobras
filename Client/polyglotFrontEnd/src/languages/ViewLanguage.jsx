@@ -25,6 +25,7 @@ export default function ViewLanguage() {
             }
             const data = await response.json();
             setLanguage(data); // Save the response data into state
+            console.log(data);
             } catch (err) {
             setError(err.message);
             }
@@ -56,8 +57,32 @@ export default function ViewLanguage() {
     } 
 
     const handleBackButton = () => {
-        navigate(-1)
-;    }
+        navigate(-1);
+    }
+
+    const colorList = [
+        "#FFDAB9", // Peach Pink
+        "#800000", // Maroon
+        "#FF1493", // Deep Pink
+        "#40E0D0", // Turquoise
+        "#8A2BE2", // BlueViolet
+        "#F4A300", // Sandy Brown
+        "#B22222", // Firebrick
+    ];
+
+    const getRandomColor = () => {
+        const randomIndex = Math.floor(Math.random() * colorList.length);
+        return colorList[randomIndex];
+    };
+
+    const getMimeTypeFromBase64 = (base64) => {
+        if (base64.startsWith('iVBOR')) {
+            return 'image/png'; 
+        } else if (base64.startsWith('/9j/')) {
+            return 'image/jpeg';
+        }
+        return 'image/jpeg'; // Default to JPEG
+    };
 
     
     return (
@@ -69,9 +94,10 @@ export default function ViewLanguage() {
             <div className="m-5 p-2 shadow border-2 rounded" >
                     <div className="card position-relative">
                         {/* Language Profile Picture */}
-                        <img 
-                            src="https://images.photowall.com/products/74785/black-dragon-at-beach.jpg?h=699&q=85" // Replace with language-specific image
-                            alt="Profile"
+                        {language.image ? (
+                            <img 
+                            src={`data:${getMimeTypeFromBase64(language.image)};base64,${language.image}`}
+                            alt="ProfilePicture"
                             className="position-absolute rounded-circle"
                             style={{
                                 top: '10px',
@@ -80,6 +106,27 @@ export default function ViewLanguage() {
                                 height: '50px',
                             }}
                         />
+                        ) : (
+                            <div
+                                className="position-absolute rounded-circle"
+                                style={{
+                                    top: '10px',
+                                    left: '10px',
+                                    width: '50px',
+                                    height: '50px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    backgroundColor: getRandomColor(), 
+                                    color: 'white',
+                                    fontSize: '24px',
+                                    fontWeight: 'bold',
+                                    fontFamily: "Lobster", 
+                                }}
+                            >
+                                {language.name ? language.name.charAt(0).toUpperCase() : "?"}
+                            </div>
+                        )}
 
                         {/* Toggle Favorite */}
                         {language.isFavorited ? (
