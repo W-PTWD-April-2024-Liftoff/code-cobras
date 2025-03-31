@@ -1,11 +1,11 @@
 package com.launchcode.polyglot.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +23,24 @@ public class Language {
     @Lob
     private byte[] image;
     private String imageBase64;
+
+    @ManyToMany
+    @JoinTable(
+            name = "language_vowel",
+            joinColumns = @JoinColumn(name = "language_id"),
+            inverseJoinColumns = @JoinColumn(name = "vowel_id")
+    )
+    @JsonManagedReference
+    private List<Vowel> vowels;
+
+    @ManyToMany
+    @JoinTable(
+            name = "language_consonant",
+            joinColumns = @JoinColumn(name = "language_id"),
+            inverseJoinColumns = @JoinColumn(name = "consonant_id")
+    )
+    @JsonManagedReference
+    private List<Consonant> consonants;
 
     //Constructor
     public Language(String name, String description, String accessFlag, String username, byte[] image) {

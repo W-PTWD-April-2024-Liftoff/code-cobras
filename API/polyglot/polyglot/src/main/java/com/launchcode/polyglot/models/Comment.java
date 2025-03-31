@@ -14,16 +14,18 @@ public class Comment {
     private int id;
 
     private String username;
-    private String comment;
+    private String commentBody;
     private String accessFlag;
+    private String languageName;
 
 
     //Constructor
-    public Comment(int id, String username, String comment, String accessFlag) {
+    public Comment(int id, String username, String commentBody, String accessFlag, String languageName) {
         this.id = id;
         this.username = username;
-        this.comment = comment;
+        this.commentBody = commentBody;
         this.accessFlag = accessFlag;
+        this.languageName = languageName;
     }
     public Comment() {
 

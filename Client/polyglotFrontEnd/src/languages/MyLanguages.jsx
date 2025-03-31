@@ -2,6 +2,7 @@ import {useState,useEffect} from 'react';
 import api from '../api/languages';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../security/AuthContext';
+import { useAuth } from '../security/AuthContext';
 
 export default function MyLanguages() {
     //Allows for navigate and redirection after an event. 
@@ -10,13 +11,13 @@ export default function MyLanguages() {
 
     const [languages,setLanguages] = useState([]);
     const [error,setError] = useState([]);
+    const {loggedInUser} = useAuth();
 
     useEffect(()=>{
         loadLanguages();        
     }, []); 
 
     const loadLanguages = async () => {
-        //let username = "Apple"
         try {
             const response = await fetch(`http://localhost:8080/languages?username=${loggedInUser}`);
             if (!response.ok) {
@@ -55,26 +56,6 @@ export default function MyLanguages() {
         setShowPopup(false);
         setItemToDelete(null);
     };
-    
-
-    const overlayStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000,
-    };
-    const popupStyle = {
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '5px',
-    textAlign: 'center',
-    };
 
     return (       
         <div className='container'>
@@ -92,7 +73,6 @@ export default function MyLanguages() {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Language Name</th>
-                            <th scope="col">Description</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -104,7 +84,6 @@ export default function MyLanguages() {
                             <tr scope="row" key={index}>
                                 <th>{index+1}</th>
                                 <td>{language.name}</td>
-                                <td>{language.description}</td>
                                 <td>
                                     <Link className="btn btn-success mx-2" to={`/viewlanguage?id=${language.id}`}>View</Link>
                                     <Link className="btn btn-secondary mx-2" to={`/editlanguage?id=${language.id}`}>Edit</Link>

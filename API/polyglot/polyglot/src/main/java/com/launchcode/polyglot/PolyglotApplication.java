@@ -51,23 +51,27 @@ public class PolyglotApplication {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.csrf(AbstractHttpConfigurer::disable)
+				.cors(Customizer.withDefaults())
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/login").permitAll()
 						.requestMatchers("/*").permitAll()
 						.requestMatchers("/addprofile").permitAll()
 						.requestMatchers("/languages").permitAll()
+						.requestMatchers("/languages/vowels").permitAll()
+						.requestMatchers("/languages/consonants").permitAll()
+						.requestMatchers("/languages/vowels/*").permitAll()
+						.requestMatchers("/languages/consonants/*").permitAll()
 						.requestMatchers("/addlanguage").permitAll()
+						.requestMatchers("/addlanguage/vowels").permitAll()
+						.requestMatchers("/addlanguage/consonants").permitAll()
 						.requestMatchers("/viewlanguage").permitAll()
 						.requestMatchers("/deletelanguage/*").permitAll()
+						.requestMatchers("/comment/*").permitAll()
 						.requestMatchers("/viewprofile/*").permitAll()
 						.requestMatchers("/editprofile/*").permitAll()
-						.anyRequest().authenticated() //this requires authentication for all requests
+						.anyRequest().authenticated()
 				)
 				.httpBasic(Customizer.withDefaults());
-//            .oauth2Login(oauth2 -> oauth2
-//                    .loginPage("/login")
-//                    .defaultSuccessUrl("/home", true)
-//            );
 		return http.build();
 	}
 

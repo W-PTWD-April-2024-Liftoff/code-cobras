@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Filter from '../layout/Filter'
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHeart, FaRegHeart} from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaPen, FaTrash, FaPlus } from 'react-icons/fa';
 import api from '../api/languages';
+import { useAuth } from '../security/AuthContext';
 
 export default function Home() {
     let navigate = useNavigate();
 
     const [error,setError] = useState([]);
     const [languages,setLanguages] = useState([]);
-    const [comments, setComments] = useState([]);
+    const [colorMap, setColorMap] = useState(new Map());
+    const [comments, setComments] = useState([]); //All comments
+    const [newComment, setNewComment] = useState('');
+    const {loggedInUser} = useAuth();
     const [filteredLanguages, setFilteredLanguages] = useState([]);
 
     const [filters, setFilters] = useState({
@@ -26,6 +30,10 @@ export default function Home() {
     useEffect(()=>{
         loadLanguages();        
     }, []); 
+
+    useEffect(()=>{
+        loadComments(); 
+    }, []);
 
     useEffect(()=>{
         filterLanguages();  
@@ -45,9 +53,30 @@ export default function Home() {
             setLanguages(data);
             setFilteredLanguages(data); // Initialize filtered data with all data 
             console.log(data);
+
+            const newColorMap = new Map();
+            data.forEach((language) => {
+                if (!newColorMap.has(language.id)) {
+                    newColorMap.set(language.id, getRandomColor());
+                }
+            })
+            setColorMap(newColorMap);
           } catch (err) {
             setError(err.message);
-          }
+        }
+    }
+
+    const loadComments = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/comments?accessFlag=public`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            } 
+            const data = await response.json();
+            setComments(data);
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     const filterLanguages = (event) => {
@@ -90,6 +119,7 @@ export default function Home() {
         return colorList[randomIndex];
     };
 
+    //Image display
     const getMimeTypeFromBase64 = (base64) => {
         if (base64.startsWith('iVBOR')) {
             return 'image/png'; 
@@ -99,8 +129,107 @@ export default function Home() {
         return 'image/jpeg'; // Default to JPEG
     };
 
+    //Comments
+    const onInputChange=(e)=>{
+        setNewComment(e.target.value); //Update state
+    }
 
-    
+    //Post new comment
+    const onSubmit = async (e, languageName) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('username', loggedInUser);
+        formData.append('commentBody', newComment);
+        formData.append('accessFlag', 'public');
+        formData.append('languageName', languageName);
+            
+        try {
+            const response = await api.post("http://localhost:8080/addcomment", formData);
+            console.log(response.data);
+            loadComments(); // update state to include posted comment
+            navigate("/");
+        } catch (error) {
+            console.log(`Error: ${error.message}`);
+        }
+        setNewComment(''); // reset comment state
+    }
+       
+    //Delete Comment
+    const [deletePopup, setDeletePopup] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
+
+    const handleDelete = (id) => {
+        setDeletePopup(true); // Show the popup 
+        setItemToDelete(id); // Set the item to delete        
+    };
+    const confirmDelete = async () => {
+        console.log(`Attempting to delete comment with id: ${itemToDelete}`);
+        try{
+            await api.delete(`http://localhost:8080/comment/${itemToDelete}`);
+            console.log(`Item ${itemToDelete} deleted`);
+            loadComments();
+        } catch (error) {
+            console.log(error.message);
+        }
+        // Hide the popup after deletion
+        setDeletePopup(false);
+        setItemToDelete(null);
+        navigate("/");
+    };
+    //Cancel delete action
+    const cancelDelete = () => {
+        setDeletePopup(false);
+        setItemToDelete(null);
+    };
+
+    //Edit Comment
+    const [editPopup, setEditPopup] = useState(false);
+    const [itemToEdit, setItemToEdit] = useState(null);
+    const [oldComment, setOldComment] = useState('');
+    const [editComment, setEditComment] = useState('');
+    const [editCommentLang, setEditCommentLang] = useState('');
+
+    const handleEdit = (id, comment, language) => {
+        setEditPopup(true); // Show the popup 
+        setItemToEdit(id); // Set the item to edit
+        setOldComment(comment);
+        setEditComment(comment);
+        setEditCommentLang(language);
+    };
+    const confirmEdit = async () => {
+        console.log(`Attempting to edit comment with id: ${itemToEdit}`);
+        
+        const updatedComment = {
+            username: loggedInUser,
+            commentBody: editComment,
+            accessFlag: "public",
+            languageName: editCommentLang
+        }
+        
+        try{
+            await api.put(`http://localhost:8080/comment/${itemToEdit}`, updatedComment);
+            console.log(`Item ${itemToEdit} edited successfully`);
+            loadComments();
+        } catch (error) {
+            console.log(error.message);
+        }
+        // Hide the popup after edit and reset state
+        setEditPopup(false);
+        setItemToEdit(null);
+        setOldComment('');
+        setEditComment('');
+        setEditCommentLang(''); 
+        navigate("/");
+    };
+    //Cancel edit action
+    const cancelEdit = () => {
+        setEditPopup(false);
+        setItemToEdit(null);
+        setOldComment('');
+        setEditComment('');
+        setEditCommentLang(''); 
+    };
 
     return (
         <div className='container'>
@@ -139,7 +268,7 @@ export default function Home() {
                                                 display: 'flex',
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
-                                                backgroundColor: getRandomColor(), 
+                                                backgroundColor: colorMap.get(language.id), 
                                                 color: 'white',
                                                 fontSize: '24px',
                                                 fontWeight: 'bold',
@@ -149,6 +278,20 @@ export default function Home() {
                                             {language.name.charAt(0).toUpperCase()}
                                         </div>
                                     )}
+
+                                    {/* Username and Follow Button */}
+                                    <div className="position-absolute" style={{
+                                        top: '20px',
+                                        left: '80px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                    }}>
+                                        <div style={{
+                                            fontSize: '15px'
+                                        }}>
+                                            {language.username}
+                                        </div>
+                                    </div>
 
                                     {/* Heart Icon: Toggle between filled and outlined heart */}
                                     {language.isFavorited ? (
@@ -188,28 +331,38 @@ export default function Home() {
                                         <h6>Comments</h6>
                                         {/* Comment Entries */}
                                         <div className="comments-list">
-                                            <div className="comment mb-2">
-                                                <div className="d-flex justify-content-start align-items-center">
-                                                    <strong className="me-2">User1:</strong>
-                                                    <span className="text-muted">This language is amazing!</span>
+                                            {comments
+                                                .filter((comment) => comment.languageName === language.name) // Filter comments for the specific language
+                                                .map((filteredComment, commentIndex) => (
+                                                <div className="comment mb-2" key={commentIndex}>
+                                                    <div className="d-flex justify-content-start align-items-center">
+                                                        <strong className="me-2">{filteredComment.username}:</strong>
+                                                        <span className="text-muted">{filteredComment.commentBody}</span>
+                                                        {loggedInUser === filteredComment.username && (
+                                                            <div className="ms-auto d-flex">
+                                                                <button className="btn btn-sm btn-light me-2 btn-outline-secondary"
+                                                                    onClick={() => handleEdit(filteredComment.id, filteredComment.commentBody, language.name)}>
+                                                                    <FaPen/></button>
+                                                                <button className="btn btn-sm btn-light btn-outline-danger"
+                                                                    onClick={() => handleDelete(filteredComment.id)}
+                                                                    >
+                                                                    <FaTrash/></button>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="comment mb-2">
-                                                <div className="d-flex justify-content-start align-items-center">
-                                                    <strong className="me-2">User2:</strong>
-                                                    <span className="text-muted">I really like how the grammar works!</span>
-                                                </div>
-                                            </div>
+                                            ))}
                                         </div>
 
                                         {/* Comment Input */}
                                         <div className="input-group mt-3">
                                             <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Add a comment..."
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Add a comment..."
+                                            onChange={(e) => onInputChange(e)}
                                             />
-                                            <button className="btn btn-outline-secondary">Post</button>
+                                            <button className="btn btn-outline-secondary" type="submit" onClick={(e)=> onSubmit(e, language.name)}>Post</button>
                                         </div>
                                     </div>
                                 </div>
@@ -221,6 +374,77 @@ export default function Home() {
                         </div>
                     )}
                 </main>
+            </div>
+            <div id="deletePopup" className=''>
+                {/* Confirmation Popup */}
+                {deletePopup && (
+                    <div
+                    className="modal show d-block"
+                    tabIndex="-1"
+                    style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+                    >
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-center w-100">Confirm Deletion</h5>
+                            <button
+                            type="button"
+                            className="btn-close"
+                            onClick={cancelDelete}
+                            aria-label="Close"
+                            ></button>
+                        </div>
+                        <div className="modal-body text-center">
+                            <p>Are you sure you want to delete this comment?</p>
+                        </div>
+                        <div className="modal-footer d-flex justify-content-center">
+                            <button type="button" className="btn btn-danger mx-2" onClick={confirmDelete}>
+                            Yes, Delete
+                            </button>
+                            <button type="button" className="btn btn-secondary mx-2" onClick={cancelDelete}>
+                            Cancel
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                )}
+            </div>
+            <div id="editPopup" className=''>
+                {/* Confirmation Popup */}
+                {editPopup && (
+                    <div
+                    className="modal show d-block"
+                    tabIndex="-1"
+                    style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+                    >
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-center w-100">Edit Comment</h5>
+                            <button type="button" className="btn-close" onClick={cancelEdit} aria-label="Close" ></button>
+                        </div>
+                        <div className="modal-body">
+                            <textarea
+                            className="form-control"
+                            rows="5"
+                            value={editComment}
+                            onChange={(e) => setEditComment(e.target.value)}
+                            style={{ resize: 'vertical', width: '100%' }}/>
+                        </div>
+                        
+                        <div className="modal-footer d-flex justify-content-center">
+                            <button type="button" className="btn btn-success mx-2" onClick={confirmEdit}>
+                            Save
+                            </button>
+                            <button type="button" className="btn btn-secondary mx-2" onClick={cancelEdit}>
+                            Cancel
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                )}
             </div>
         </div>
     )
