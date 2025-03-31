@@ -11,6 +11,14 @@ export default function AddLanguage() {
     
     let navigate = useNavigate();
     const {loggedInUser} = useAuth();
+
+    const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth' // Optional, adds smooth scrolling
+        });
+      };
     
 
     const [errorMsg,setErrorMsg]=useState('');
@@ -168,7 +176,7 @@ export default function AddLanguage() {
         formData.append('name', language.name);
         formData.append('description', language.description);
         formData.append('accessFlag', language.accessFlag);
-        formData.append('username', language.username);
+        formData.append('username', loggedInUser );  //language.username
         if (image) {
             formData.append('image', image); 
         }
@@ -180,7 +188,14 @@ export default function AddLanguage() {
                 }
             });
             console.log(response.data);
-            navigate("/languages");
+            //navigate("/languages");
+            if (response.data == "Language added successfully"){
+                navigate("/languages");
+              }
+              else {
+                setErrorMsg(response.data);
+                scrollToTop();
+              }            
         } catch (error) {
             console.log(`Error: ${error.message}`);
         }
@@ -189,6 +204,7 @@ export default function AddLanguage() {
     return (
         <div className='row shadow'>
             <h1>Add New Language</h1>
+            <p className='errorNotification'>{errorMsg}</p>
             <form onSubmit={(e)=> onSubmit(e)}>
                 <div className="row w-50 position-relative start-50 translate-middle-x">
                     <div className="text-center mt-5">
@@ -212,7 +228,7 @@ export default function AddLanguage() {
                             onChange={(e) => onImageChange(e)} />
                     </div>
                 </div>
-                <div className="row w-50 position-relative start-50 translate-middle-x">
+                {/* <div className="row w-50 position-relative start-50 translate-middle-x">
                     <div className="text-center mt-3">
                         <label htmlFor="Name" className="form-label">Username</label>
                         <input type={"text"} 
@@ -223,7 +239,7 @@ export default function AddLanguage() {
                         onChange={(e)=>onInputChange(e)}
                         required></input>
                     </div>
-                </div>
+                </div> */}
                 <div className="row w-75 position-relative start-50 translate-middle-x">
                     <div className="text-center mt-3">
                         <label htmlFor="Description" className="form-label">Language Description</label>

@@ -59,7 +59,7 @@ public class UserController {
             }
             session.setAttribute("user", newUser.getUsername());
             //return ResponseEntity.ok("Login was successful!");
-            return ResponseEntity.ok(user.getUsername());
+            return ResponseEntity.ok(user.getUsername() + ":" + user.getId());
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unknown error occurred");

@@ -10,24 +10,58 @@ export default function Home() {
     const [error,setError] = useState([]);
     const [languages,setLanguages] = useState([]);
     const [comments, setComments] = useState([]);
+    const [filteredLanguages, setFilteredLanguages] = useState([]);
+
+    const [filters, setFilters] = useState({
+        consonant: "",
+        vowel: "",
+        language: ""
+      });
+
+      const handleFilterChange = (newFilters) => {
+        console.log(newFilters);
+        setFilters(newFilters);
+      };      
 
     useEffect(()=>{
         loadLanguages();        
     }, []); 
 
+    useEffect(()=>{
+        filterLanguages();  
+        setTimeout(() => window.scrollTo(0, 0), 0);  
+    }, [filters]);     
+
     const loadLanguages = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/?accessFlag=public`);
+            console.log(filters.language);
+            //let languageQryString = "";
+            //if (filters.language != ""){languageQryString = "&name=" + filters.language}
+            const response = await fetch(`http://localhost:8080/?accessFlag=public`);  // + languageQryString
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            setLanguages(data); 
+            setLanguages(data);
+            setFilteredLanguages(data); // Initialize filtered data with all data 
             console.log(data);
           } catch (err) {
             setError(err.message);
           }
     }
+
+    const filterLanguages = (event) => {
+        //const searchTerm = event.target.value.toLowerCase();
+        console.log(languages);
+        const newFilteredData = languages.filter(item =>
+          item.name.toLowerCase().includes(filters.language.toLowerCase())
+        );
+        //.map(item => ({ ...item, name: item.name.trim() }));
+        setFilteredLanguages(newFilteredData);
+        //console.log(filteredLanguages.length);
+        //console.log(newFilteredData.length);
+        
+      };    
 
     const toggleFavorite = (languageId) => {
         // Update useState 
@@ -75,10 +109,10 @@ export default function Home() {
                 creating constructed languages. From Dothraki to Sindarin Elvish, we've got it all! 
             </p>
             <div className="container-xxl bd-gutter mt-3 my-md-4 bd-layout">
-                <aside className='bd-sidebar' data-bs-spy="scroll"><Filter></Filter></aside>
+                <aside className='bd-sidebar' data-bs-spy="scroll"><Filter languages={languages} filters={filters} onValuesChange={handleFilterChange}></Filter></aside>
                 <main className="bd-main order-1" data-bs-spy="scroll">
-                {languages && languages.length > 0 ? (
-                        languages.map((language, index) => (
+                {filteredLanguages && filteredLanguages.length > 0 ? (
+                        filteredLanguages.map((language, index) => (
                             <div className="m-5 p-2 shadow border-2 rounded" key={index}>
                                 <div className="card position-relative">
                                     {/* Language Profile Picture */}

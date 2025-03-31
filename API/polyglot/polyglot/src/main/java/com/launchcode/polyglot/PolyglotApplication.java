@@ -59,6 +59,8 @@ public class PolyglotApplication {
 						.requestMatchers("/addlanguage").permitAll()
 						.requestMatchers("/viewlanguage").permitAll()
 						.requestMatchers("/deletelanguage/*").permitAll()
+						.requestMatchers("/viewprofile/*").permitAll()
+						.requestMatchers("/editprofile/*").permitAll()
 						.anyRequest().authenticated() //this requires authentication for all requests
 				)
 				.httpBasic(Customizer.withDefaults());

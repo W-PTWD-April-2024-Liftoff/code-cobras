@@ -20,6 +20,10 @@ public class User {
     private String bio;
     private String authority;
 
+    public int getId() {
+        return id;
+    }
+
     @NotNull
     private String pwHash;
 

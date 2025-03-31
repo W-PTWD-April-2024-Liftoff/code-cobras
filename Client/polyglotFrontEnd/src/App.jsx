@@ -40,13 +40,13 @@ function App() {
           <Route exact path="/" element={<Home/>}></Route>
           <Route exact path="/favorites" element={<ProtectedRoute><Favorites/></ProtectedRoute>}></Route>
           <Route exact path="/compare" element={<ProtectedRoute><Compare/></ProtectedRoute>}></Route>
-          <Route exact path="/viewprofile" element={<ViewProfile/>}></Route>
+          <Route exact path="/viewprofile" element={<ProtectedRoute><ViewProfile/></ProtectedRoute>}></Route>
           <Route exact path="/addprofile" element={<AddProfile/>}></Route>
-          <Route exact path="/editprofile/:id" element={<EditProfile/>}></Route>
-          <Route exact path="/viewlanguage" element={<ViewLanguage/>}></Route>
+          <Route exact path="/editprofile/:id" element={<ProtectedRoute><EditProfile/></ProtectedRoute>}></Route>
+          <Route exact path="/viewlanguage" element={<ProtectedRoute><ViewLanguage/></ProtectedRoute>}></Route>
           <Route exact path="/addlanguage" element={<ProtectedRoute><AddLanguage/></ProtectedRoute>}></Route>
-          <Route exact path="/editlanguage" element={<EditLanguage/>}></Route>
-          <Route exact path="/languages" element={<MyLanguages/>}></Route>
+          <Route exact path="/editlanguage" element={<ProtectedRoute><EditLanguage/></ProtectedRoute>}></Route>
+          <Route exact path="/languages" element={<ProtectedRoute><MyLanguages/></ProtectedRoute>}></Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/callback" element={<CallbackPage/>} />
         </Routes>        

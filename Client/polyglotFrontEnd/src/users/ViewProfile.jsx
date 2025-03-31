@@ -1,10 +1,13 @@
 import {useState,useEffect} from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '../security/AuthContext';
 
 export default function ViewProfile() {
 
-    const {id} = useParams();
+    const {loggedInUserId} = useAuth();
+    //const {id} = useParams();
+    const id = loggedInUserId;
 
     //Allows for navigate and redirection after an event. 
     let navigate = useNavigate;
@@ -12,12 +15,13 @@ export default function ViewProfile() {
     //Users
     const [user, setUser] = useState([])
 
-    useEffect(()=>{
-        loadUser();
-    })
+    // useEffect(()=>{
+    //     loadUser();
+    // })
 
     const loadUser = async () => {
-        const result = await axios.get("http://localhost:8080/viewprofile");
+        console.log(id);
+        const result = await axios.get(`http://localhost:8080/viewprofile/${id}`);
         setUser(result.data);
     }
 
@@ -32,7 +36,7 @@ export default function ViewProfile() {
             <div className=''>
                 <h1>My Profile</h1>
                 <p>This is where I can view my profile and my languages</p>
-                <Link className="btn btn-outline-primary" to={`/editprofile/${user.id}`} style={{margin:5}}>Edit Profile</Link>
+                <Link className="btn btn-outline-primary" to={`/editprofile/${loggedInUserId}`} style={{margin:5}}>Edit Profile</Link>
             </div>
             <div className="container p-4">
                 <button className="btn btn-outline-danger mx-2" onClick={() => deleteUser(user.id)}>Delete Profile</button>

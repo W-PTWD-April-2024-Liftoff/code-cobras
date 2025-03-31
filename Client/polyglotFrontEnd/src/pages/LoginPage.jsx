@@ -31,8 +31,10 @@ const LoginPage = () => {
             if (response.status === 200){
                 console.log("completed!");
                 console.log(response.data);
-                login(response.data);
-                navigate("/");
+                const myArray = response.data.split(":");
+                //login(response.data);
+                login(myArray[0],myArray[1]);
+                navigate("/languages");
             }
             else {
                 console.log(response);

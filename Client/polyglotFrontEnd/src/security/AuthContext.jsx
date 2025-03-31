@@ -15,13 +15,19 @@ export const AuthProvider = ({children}) => {
         return localStorage.getItem('loggedInUser') 
     })
 
-    const login = (username) => {
+    const [loggedInUserId, setloggedInUserId] = useState(() => {
+        return localStorage.getItem('loggedInUserId') 
+    })
+
+    const login = (username,userid) => {
         //console.log(loggedInUser)
         setIsAuthenticated(true)
         localStorage.setItem('isAuthenticated', true)
         setloggedInUser(username)
         localStorage.setItem('loggedInUser', username)
-        console.log(loggedInUser)
+        setloggedInUserId(userid)
+        localStorage.setItem('loggedInUserId', userid)        
+        console.log(loggedInUserId)
     }
 
     const logout = () => {
@@ -30,7 +36,7 @@ export const AuthProvider = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, login, logout, loggedInUser}}>
+        <AuthContext.Provider value={{isAuthenticated, login, logout, loggedInUser,loggedInUserId}}>
             {children}
         </AuthContext.Provider>
     )

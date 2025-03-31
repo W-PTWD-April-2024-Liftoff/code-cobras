@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext , useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from '../security/AuthContext';
 
+
 export default function Navbar() {
+
 
     //const auth = useContext(AuthProvider); // Access the context
     const {isAuthenticated} = useAuth();
@@ -21,7 +23,7 @@ export default function Navbar() {
 
 
     return (
-        <div>
+        // <div> //comment this div to have sticky work
             <nav className="navbar bg-dark sticky-top navbar-expand-lg bg-body-tertiary border-bottom border-3 border-success">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="/">Polyglot</a>
@@ -34,13 +36,13 @@ export default function Navbar() {
                             {/* <li className="nav-item">
                                 <a className="nav-link" href="/">Home</a>
                             </li> */}
-                            {(isAuthenticated)   ? <li className="nav-item">
+                            {(isAuthenticated)   ? <li className='nav-item'>  
                                 <a className="nav-link" href="/languages">My Languages</a>
                             </li> : <p></p>}
-                            {(isAuthenticated)   ? <li className="nav-item">
+                            {(isAuthenticated)   ? <li className='nav-item'>
                                 <a className="nav-link" href="/favorites">My Favorites</a>
                             </li> : <p></p>}
-                            {(isAuthenticated)   ? <li className="nav-item">
+                            {(isAuthenticated)   ? <li className='nav-item'>
                                 <a className="nav-link" href="/compare">Compare</a>
                             </li>  : <p></p>}
                         </ul>
@@ -52,6 +54,6 @@ export default function Navbar() {
                     {(isAuthenticated)   ? <Link className="btn btn-outline-success" onClick={signout} style={{margin:5}}>Sign Out</Link> : <p></p>}
                 </div>
             </nav>
-        </div>
+        //</div>
     )
 }

@@ -1,12 +1,14 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useAuth } from '../security/AuthContext';
 
 export default function EditProfile() {
 
-    let navigate = useNavigate;
-
-    const {id} = useParams();
+    let navigate = useNavigate();
+    const {loggedInUserId} = useAuth();
+    const id = loggedInUserId;
+    //const {id} = useParams();
     
     const [user,setUser]=useState({
         username:"",
@@ -29,10 +31,11 @@ export default function EditProfile() {
         e.preventDefault();
         await axios.put(`http://localhost:8080/editprofile/${id}`, user);
         //insert redirect to viewprofile here.
+        navigate("/viewprofile");
     }
 
     const loadUser = async ()=> {
-        const result = await axios.get(`http://localhost:8080/editprofile/${id}`);
+        const result = await axios.get(`http://localhost:8080/viewprofile/${id}`);
         setUser(result.data);
     }
     

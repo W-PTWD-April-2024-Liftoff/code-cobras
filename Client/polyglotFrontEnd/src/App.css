@@ -42,4 +42,21 @@
 }
 .errorNotification{
   color: red;
+  background-color: yellow;
+}
+
+.bd-sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.bd-main {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
 }

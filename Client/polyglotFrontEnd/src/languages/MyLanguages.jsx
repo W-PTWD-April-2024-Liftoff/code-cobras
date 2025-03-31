@@ -1,10 +1,12 @@
 import {useState,useEffect} from 'react';
 import api from '../api/languages';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../security/AuthContext';
 
 export default function MyLanguages() {
     //Allows for navigate and redirection after an event. 
     let navigate = useNavigate();
+    const {loggedInUser} = useAuth();
 
     const [languages,setLanguages] = useState([]);
     const [error,setError] = useState([]);
@@ -14,9 +16,9 @@ export default function MyLanguages() {
     }, []); 
 
     const loadLanguages = async () => {
-        let username = "Foxfyyre"
+        //let username = "Apple"
         try {
-            const response = await fetch(`http://localhost:8080/languages?username=${username}`);
+            const response = await fetch(`http://localhost:8080/languages?username=${loggedInUser}`);
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
