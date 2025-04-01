@@ -3,167 +3,195 @@
     "name":"i",
     "height":"close",
     "roundness":"unrounded",
-    "backness":"front"
+    "backness":"front",
+    "unicode": "\u0069"
 },{
     "id": 2,
     "name":"y",
     "height":"close",
     "roundness":"rounded",
-    "backness":"front"
+    "backness":"front",
+    "unicode": "\u0079"
 },{
     "id": 3,
     "name":"ɪ",
     "height":"near-close",
     "roundness":"unrounded",
-    "backness":"near-front"
+    "backness":"near-front",
+    "unicode": "\u026A"
 },{
     "id": 4,
     "name":"ʏ",
     "height":"near-close",
     "roundness":"rounded",
-    "backness":"near-front"
+    "backness":"near-front",
+    "unicode": "\u028F"
 },{
     "id": 5,
     "name":"e",
     "height":"close-mid",
     "roundness":"unrounded",
-    "backness":"front"
+    "backness":"front",
+    "unicode": "\u0065"
 },{
     "id": 6,
     "name":"ø",
     "height":"close-mid",
     "roundness":"rounded",
-    "backness":"near-front"
+    "backness":"near-front",
+    "unicode": "\u00F8"
 },{
     "id": 7,
     "name":"ɛ",
     "height":"open-mid",
     "roundness":"unrounded",
-    "backness":"near-front"
+    "backness":"near-front",
+    "unicode": "\u025B"
 },{
     "id": 8,
     "name":"œ",
     "height":"open-mid",
     "roundness":"rounded",
-    "backness":"central"
+    "backness":"central",
+    "unicode": "\u0153"
 },{
     "id": 9,
     "name":"æ",
     "height":"near-open",
     "roundness":"unrounded",
-    "backness":"near-front"
+    "backness":"near-front",
+    "unicode": "\u00E6"
 },{
     "id": 10,
     "name":"a",
     "height":"open",
     "roundness":"unrounded",
-    "backness":"central"
+    "backness":"central",
+    "unicode": "\u0061"
 },{
     "id": 11,
     "name":"ɨ",
     "height":"close",
     "roundness":"unrounded",
-    "backness":"central"
+    "backness":"central",
+    "unicode": "\u0268"
 },{
     "id": 12,
     "name":"ʉ",
     "height":"close",
     "roundness":"rounded",
-    "backness":"central"
+    "backness":"central",
+    "unicode": "\u0289"
 },{
     "id": 13,
     "name":"ɘ",
     "height":"close-mid",
     "roundness":"unrounded",
-    "backness":"central"
+    "backness":"central",
+    "unicode": "\u0258"
 },{
     "id": 14,
     "name":"ɵ",
     "height":"close-mid",
     "roundness":"rounded",
-    "backness":"near-back"
+    "backness":"near-back",
+    "unicode": "\u0275"
 },{
     "id": 15,
     "name":"ə",
     "height":"mid",
     "roundness":"schwa",
-    "backness":"central"
+    "backness":"central",
+    "unicode": "\u0259"
 },{
     "id": 16,
     "name":"ɜ",
     "height":"open-mid",
     "roundness":"unrounded",
-    "backness":"central"
+    "backness":"central",
+    "unicode": "\u025C"
 },{
     "id": 17,
     "name":"ɞ",
     "height":"open-mid",
     "roundness":"rounded",
-    "backness":"near-back"
+    "backness":"near-back",
+    "unicode": "\u025E"
 },{
     "id": 18,
     "name":"ɐ",
     "height":"near-open",
     "roundness":"unrounded",
-    "backness":"near-back"
+    "backness":"near-back",
+    "unicode": "\u0250"
 },{
     "id": 19,
     "name":"ä",
     "height":"open",
     "roundness":"unrounded",
-    "backness":"near-back"
+    "backness":"near-back",
+    "unicode": "\u00E4"
 },{
     "id": 20,
     "name":"ɯ",
     "height":"close",
     "roundness":"unrounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u026F"
 },{
     "id": 21,
     "name":"u",
     "height":"close",
     "roundness":"rounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u0075"
 },{
     "id": 22,
     "name":"ʊ",
     "height":"near-close",
     "roundness":"unrounded",
-    "backness":"near-back"
+    "backness":"near-back",
+    "unicode": "\u028A"
 },{
     "id": 23,
     "name":"ɤ",
     "height":"close-mid",
     "roundness":"unrounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u0264"
 },{
     "id": 24,
     "name":"o",
     "height":"close-mid",
     "roundness":"rounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u006F"
 },{
     "id": 25,
     "name":"ʌ",
     "height":"open-mid",
     "roundness":"unrounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u028C"
 },{
     "id": 26,
     "name":"ɔ",
     "height":"open-mid",
     "roundness":"rounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u0254"
 },{
     "id": 27,
     "name":"ɑ",
     "height":"open",
     "roundness":"unrounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u0250"
 },{
     "id": 28,
     "name":"ɒ",
     "height":"open",
     "roundness":"rounded",
-    "backness":"back"
+    "backness":"back",
+    "unicode": "\u0278"
 }]

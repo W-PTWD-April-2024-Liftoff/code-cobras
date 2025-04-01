@@ -30,99 +30,99 @@ export default function AddLanguage() {
     });
     const [image, setImage] = useState(null);
     const [languageVowels,setLanguageVowels]=useState({
-        i:"",
-        y:"",
-        ɪ:"",
-        ʏ:"",
-        e:"",
-        ø:"",
-        ɛ:"",
-        œ:"",
-        æ:"",
-        a:'',
-        ɨ:"",
-        ʉ:'',
-        ɘ:"",
-        ɵ:"",
-        ə:"",
-        ɜ:"",
-        ɞ:"",
-        ɐ:"",
-        ä:"",
-        ɯ:"",
-        u:"",
-        ʊ:"",
-        ɤ:"",
-        o:"",
-        ʌ:"",
-        ɔ:"",
-        ɑ:"",
-        ɒ:""
+        1:"",
+        2:"",
+        3:"",
+        4:"",
+        5:"",
+        6:"",
+        7:"",
+        8:"",
+        9:"",
+        10:"",
+        11:"",
+        12:"",
+        13:"",
+        14:"",
+        15:"",
+        16:"",
+        17:"",
+        18:"",
+        19:"",
+        20:"",
+        21:"",
+        22:"",
+        23:"",
+        24:"",
+        25:"",
+        26:"",
+        27:"",
+        28:""
     })
     const [languageConsonants, setLanguageConsonants] = useState({
-        p: "",
-        b: "",
-        t: "",
-        d: "",
-        ʈ: "",
-        ɖ: "",
-        c: "",
-        ɟ: "",
-        k: "",
-        g: "",
-        q: "",
-        ɢ: "",
-        ʔ: "",
-        m: "",
-        ɱ: "",
-        n: "",
-        ɳ: "",
-        ɲ: "",
-        ŋ: "",
-        ɴ: "",
-        ʙ: "",
-        r: "",
-        ʀ: "",
-        ɾ: "",
-        ɽ: "",
-        ɸ: "",
-        β: "",
-        f: "",
-        v: "",
-        θ: "",
-        ð: "",
-        s: "",
-        z: "",
-        ʃ: "",
-        ʒ: "",
-        ʂ: "",
-        ʐ: "",
-        ç: "",
-        ʝ: "",
-        x: "",
-        ɣ: "",
-        χ: "",
-        ʁ: "",
-        ħ: "",
-        ʕ: "",
-        h: "",
-        ɦ: "",
-        ɬ: "",
-        ɮ: "",
-        ʋ: "",
-        ɹ: "",
-        ɻ: "",
-        j: "",
-        ɰ: "",
-        l: "",
-        ɭ: "",
-        ʎ: "",
-        ʟ: ""        
+        1: "",
+        2: "",
+        3: "",
+        4: "",
+        5: "",
+        6: "",
+        7: "",
+        8: "",
+        9: "",
+        10: "",
+        11: "",
+        12: "",
+        13: "",
+        14: "",
+        15: "",
+        16: "",
+        17: "",
+        18: "",
+        19: "",
+        20: "",
+        21: "",
+        22: "",
+        23: "",
+        24: "",
+        25: "",
+        26: "",
+        27: "",
+        28: "",
+        29: "",
+        30: "",
+        31: "",
+        32: "",
+        33: "",
+        34: "",
+        35: "",
+        36: "",
+        37: "",
+        38: "",
+        39: "",
+        40: "",
+        41: "",
+        42: "",
+        43: "",
+        44: "",
+        45: "",
+        46: "",
+        47: "",
+        48: "",
+        49: "",
+        50: "",
+        51: "",
+        52: "",
+        53: "",
+        54: "",
+        55: "",
+        56: "",
+        57: "",
+        58: ""        
     });
     const [newPrivateComment, setNewPrivateComment] = useState('');
     const {name, description, accessFlag, username}=language;
-    const {i, y, ɪ, ʏ, e, ø, ɛ, œ, æ, a, ɨ, ʉ, ɘ, ɵ, ə, ɜ, ɞ, ɐ, ä, ɯ, u, ʊ, ɤ, o, ʌ, ɔ, ɑ, ɒ}=languageVowels;
-    const {p,b,t,d,ʈ,ɖ,c,ɟ,k,g,q,ɢ,ʔ,m,ɱ,n,ɳ,ɲ,ŋ,ɴ,ʙ,r,ʀ,ɾ,ɽ,ɸ,β,f,v,θ,ð,s,z,ʃ,ʒ,ʂ,ʐ,ç,ʝ,x,ɣ,χ,ʁ,ħ,ʕ,h,ɦ,ɬ,ɮ,ʋ,ɹ,ɻ,j,ɰ,l,ɭ,ʎ, ʟ} = languageConsonants;
+    //const {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18}=languageVowels;
+    //const {p,b,t,d,ʈ,ɖ,c,ɟ,k,g,q,ɢ,ʔ,m,ɱ,n,ɳ,ɲ,ŋ,ɴ,ʙ,r,ʀ,ɾ,ɽ,ɸ,β,f,v,θ,ð,s,z,ʃ,ʒ,ʂ,ʐ,ç,ʝ,x,ɣ,χ,ʁ,ħ,ʕ,h,ɦ,ɬ,ɮ,ʋ,ɹ,ɻ,j,ɰ,l,ɭ,ʎ, ʟ} = languageConsonants;
 
     //UseEffects
     useEffect(() => {
@@ -148,11 +148,10 @@ export default function AddLanguage() {
         e.preventDefault();
         const {name, checked} = e.target;
         if (e.target.id === "vowel") {
-            setLanguageVowels(oldVowels => ({...oldVowels,[name]: checked ? name : ""}));
+            setLanguageVowels(oldVowels => ({...oldVowels,[name]: checked ? "true" : "false"}));
         } else if (e.target.id === "consonant") {
-            setLanguageConsonants(oldConsonants => ({...oldConsonants,[name]: checked ? name : ""}))
+            setLanguageConsonants(oldConsonants => ({...oldConsonants,[name]: checked ? "true" : "false"}))
         }
-        setDummyState((dummy) => !dummy); //rerender page to help checkboxes populate upon click
     }
 
     const onImageChange = (e) => {
@@ -178,22 +177,7 @@ export default function AddLanguage() {
         if (image) {
             languageFormData.append('image', image); 
         }
-        
-        const vowelFormData = new FormData();
-        if (languageVowels) {
-            vowelFormData.append('languageName', language.name);
-            for (const [key, value] of Object.entries(languageVowels)) {
-                vowelFormData.append(key, value);
-            }
-        }
-        
-        const consonantFormData = new FormData();
-        if (languageConsonants) {
-            consonantFormData.append('languageName', language.name);
-            for (const [key, value] of Object.entries(languageConsonants)) {
-                consonantFormData.append(key, value);
-            }
-        }
+
 
         const commentFormData = new FormData();
         commentFormData.append('username', loggedInUser);
@@ -208,21 +192,42 @@ export default function AddLanguage() {
         try {
             const response1 = await api.post("http://localhost:8080/addlanguage", languageFormData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', 
+                    'Content-Type': 'multipart/form-data',
                 }
             });
-            console.log(response1.data);
-
-            const response2 = await api.post("http://localhost:8080/addcomment", commentFormData);
-            console.log(response2.data);
-
-            const response3 = await api.post("http://localhost:8080/addlanguage/vowels", vowelFormData);
-            console.log(response3.data);
-
-            const response4 = await api.post("http://localhost:8080/addlanguage/consonants", consonantFormData);
-            console.log(response4.data);
-            if (response1.data == "Language added successfully") { // add other 3 responses here
+            
+            if (response1.data.message === "Language successfully added") {
+                const languageId = response1.data.id;
+                console.log(languageId);
+                console.log(typeof(languageId));
+                
+                const vowelFormData = new FormData();
+                const consonantFormData = new FormData();
+                //vowelFormData.append('languageId', String(languageId));
+                //consonantFormData.append('languageId', String(languageId));
+    
+                if (languageVowels) {
+                    for (const [key, value] of Object.entries(languageVowels)) {
+                        vowelFormData.append(key, value);
+                    }
+                }
+                const response2 = await api.post(`http://localhost:8080/addlanguage/vowels/${languageId}`, vowelFormData);
+                console.log(response2.data);
+    
+                if (languageConsonants) {
+                    for (const [key, value] of Object.entries(languageConsonants)) {
+                        consonantFormData.append(key, value);
+                    }
+                }
+                const response3 = await api.post(`http://localhost:8080/addlanguage/consonants/${languageId}`, consonantFormData);
+                console.log(response3.data);
+    
+                const response4 = await api.post("http://localhost:8080/addcomment", commentFormData);
+                console.log(response4.data);
+    
                 navigate("/languages");
+            } else {
+                console.log("Error in adding language:", response1.data);
             }
         } catch (error) {
             console.log(`Error: ${error.message}`);
@@ -329,31 +334,31 @@ export default function AddLanguage() {
                                 <th>Close</th>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">i</label> 
-                                    <input className="form-check-input" type="checkbox" name="i" checked={languageVowels.i === "i"} id="vowel"onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="1" checked={languageVowels[1] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">y</label> 
-                                    <input className="form-check-input" type="checkbox" name="y" checked={languageVowels.y === "y"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="2" checked={languageVowels[2] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɨ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɨ" checked={languageVowels.ɨ === "ɨ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="11" checked={languageVowels[11] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʉ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ʉ" checked={languageVowels.ʉ === "ʉ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="12" checked={languageVowels[12] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɯ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɯ" checked={languageVowels.ɯ === "ɯ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="20" checked={languageVowels[20] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">u</label> 
-                                    <input className="form-check-input" type="checkbox" name="u" checked={languageVowels.u === "u"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="21" checked={languageVowels[21] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                             </tr>
                             <tr>
                                 <th>Near-Close</th>
@@ -362,10 +367,10 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɪ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɪ" checked={languageVowels.ɪ === "ɪ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="3" checked={languageVowels[3] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʏ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ʏ" checked={languageVowels.ʏ === "ʏ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="4" checked={languageVowels[4] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -374,7 +379,7 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʊ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ʊ" checked={languageVowels.ʊ === "ʊ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="22" checked={languageVowels[22] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -385,29 +390,29 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">e</label> 
-                                    <input className="form-check-input" type="checkbox" name="e" checked={languageVowels.e === "e"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="5" checked={languageVowels[5] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ø</label> 
-                                    <input className="form-check-input" type="checkbox" name="ø" checked={languageVowels.ø === "ø"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="6" checked={languageVowels[6] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɘ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɘ" checked={languageVowels.ɘ === "ɘ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="13" checked={languageVowels[13] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɵ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɵ" checked={languageVowels.ɵ === "ɵ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="14" checked={languageVowels[14] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɤ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɤ" checked={languageVowels.ɤ === "ɤ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="23" checked={languageVowels[23] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">o</label> 
-                                    <input className="form-check-input" type="checkbox" name="o" checked={languageVowels.o === "o"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="24" checked={languageVowels[24] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                             </tr>
                             <tr>
                                 <th>Mid</th>
@@ -420,7 +425,7 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ə</label> 
-                                    <input className="form-check-input" type="checkbox" name="ə" checked={languageVowels.ə === "ə"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="15" checked={languageVowels[15] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -436,28 +441,28 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɛ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɛ" checked={languageVowels.ɛ === "ɛ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="7" checked={languageVowels[7] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">œ</label> 
-                                    <input className="form-check-input" type="checkbox" name="œ" checked={languageVowels.œ === "œ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="8" checked={languageVowels[8] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɜ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɜ" checked={languageVowels.ɜ === "ɜ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="16" checked={languageVowels[16] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɞ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɞ" checked={languageVowels.ɞ === "ɞ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="17" checked={languageVowels[17] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʌ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ʌ" checked={languageVowels.ʌ === "ʌ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="25" checked={languageVowels[25] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɔ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɔ" checked={languageVowels.ɔ === "ɔ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="26" checked={languageVowels[26] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                             </tr>
                             <tr>
                                 <th>Near-Open</th>
@@ -468,13 +473,13 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">æ</label> 
-                                    <input className="form-check-input" type="checkbox" name="æ" checked={languageVowels.æ === "æ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="9" checked={languageVowels[9] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɐ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɐ" checked={languageVowels.ɐ === "ɐ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="19" checked={languageVowels[19] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -491,21 +496,21 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">a</label> 
-                                    <input className="form-check-input" type="checkbox" name="a" checked={languageVowels.a === "a"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="10" checked={languageVowels[10] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ä</label> 
-                                    <input className="form-check-input" type="checkbox" name="ä" checked={languageVowels.ä === "ä"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="19" checked={languageVowels[19] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɑ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɑ" checked={languageVowels.ɑ === "ɑ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="27" checked={languageVowels[27] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɒ</label> 
-                                    <input className="form-check-input" type="checkbox" name="ɒ" checked={languageVowels.ɒ === "ɒ"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
+                                    <input className="form-check-input" type="checkbox" name="28" checked={languageVowels[28] === "true"} id="vowel" onChange={(e)=>onSoundSelect(e)}/></td>
                             </tr>
                         </tbody>
                         
@@ -537,11 +542,11 @@ export default function AddLanguage() {
                                 <th>Plosive</th>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">p</label>
-                                    <input className="form-check-input" type="checkbox" name="p" checked={languageConsonants.p === "p"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="1" checked={languageConsonants[1] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">b</label>
-                                    <input className="form-check-input" type="checkbox" name="b" checked={languageConsonants.b === "b"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="2" checked={languageConsonants[2] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -549,51 +554,51 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">t</label>
-                                    <input className="form-check-input" type="checkbox" name="t" checked={languageConsonants.t === "t"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="3" checked={languageConsonants[3] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">d</label>
-                                    <input className="form-check-input" type="checkbox" name="d" checked={languageConsonants.d === "d"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="4" checked={languageConsonants[4] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʈ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʈ" checked={languageConsonants.ʈ === "ʈ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="5" checked={languageConsonants[5] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɖ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɖ" checked={languageConsonants.ɖ === "ɖ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="6" checked={languageConsonants[6] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">c</label>
-                                    <input className="form-check-input" type="checkbox" name="c" checked={languageConsonants.c === "c"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="7" checked={languageConsonants[7] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɟ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɟ" checked={languageConsonants.ɟ === "ɟ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="8" checked={languageConsonants[8] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">k</label>
-                                    <input className="form-check-input" type="checkbox" name="k" checked={languageConsonants.k === "k"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="9" checked={languageConsonants[9] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">g</label>
-                                    <input className="form-check-input" type="checkbox" name="g" checked={languageConsonants.g === "g"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="10" checked={languageConsonants[10] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">q</label>
-                                    <input className="form-check-input" type="checkbox" name="q" checked={languageConsonants.q === "q"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="11" checked={languageConsonants[11] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɢ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɢ" checked={languageConsonants.ɢ === "ɢ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="12" checked={languageConsonants[12] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʔ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʔ" checked={languageConsonants.ʔ === "ʔ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="13" checked={languageConsonants[13] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                             </tr>
@@ -602,41 +607,41 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">m</label>
-                                    <input className="form-check-input" type="checkbox" name="m" checked={languageConsonants.m === "m"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="14" checked={languageConsonants[14] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɱ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɱ" checked={languageConsonants.ɱ === "ɱ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="15" checked={languageConsonants[15] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">n</label>
-                                    <input className="form-check-input" type="checkbox" name="n" checked={languageConsonants.n === "n"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="16" checked={languageConsonants[16] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɳ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɳ" checked={languageConsonants.ɳ === "ɳ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="17" checked={languageConsonants[17] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɲ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɲ" checked={languageConsonants.ɲ === "ɲ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="18" checked={languageConsonants[18] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ŋ</label>
-                                    <input className="form-check-input" type="checkbox" name="ŋ" checked={languageConsonants.ŋ === "ŋ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="19" checked={languageConsonants[19] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɴ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɴ" checked={languageConsonants.ɴ === "ɴ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="20" checked={languageConsonants[20] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -648,7 +653,7 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʙ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʙ" checked={languageConsonants.ʙ === "ʙ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="21" checked={languageConsonants[21] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -657,7 +662,7 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">r</label>
-                                    <input className="form-check-input" type="checkbox" name="r" checked={languageConsonants.r === "r"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="22" checked={languageConsonants[22] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -670,7 +675,7 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʀ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʀ" checked={languageConsonants.ʀ === "ʀ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="23" checked={languageConsonants[23] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -688,14 +693,14 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɾ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɾ" checked={languageConsonants.ɾ === "ɾ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="24" checked={languageConsonants[24] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɽ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɽ" checked={languageConsonants.ɽ === "ɽ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="25" checked={languageConsonants[25] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -710,91 +715,91 @@ export default function AddLanguage() {
                                 <th>Fricative</th>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɸ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɸ" checked={languageConsonants.ɸ === "ɸ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="26" checked={languageConsonants[26] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">β</label>
-                                    <input className="form-check-input" type="checkbox" name="β" checked={languageConsonants.β === "β"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="27" checked={languageConsonants[27] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">f</label>
-                                    <input className="form-check-input" type="checkbox" name="f" checked={languageConsonants.f === "f"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="28" checked={languageConsonants[28] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">v</label>
-                                    <input className="form-check-input" type="checkbox" name="v" checked={languageConsonants.v === "v"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="29" checked={languageConsonants[29] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">θ</label>
-                                    <input className="form-check-input" type="checkbox" name="θ" checked={languageConsonants.θ === "θ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="30" checked={languageConsonants[30] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ð</label>
-                                    <input className="form-check-input" type="checkbox" name="ð" checked={languageConsonants.ð === "ð"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="31" checked={languageConsonants[31] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">s</label>
-                                    <input className="form-check-input" type="checkbox" name="s" checked={languageConsonants.s === "s"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="32" checked={languageConsonants[32] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">z</label>
-                                    <input className="form-check-input" type="checkbox" name="z" checked={languageConsonants.z === "z"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="33" checked={languageConsonants[33] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʃ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʃ" checked={languageConsonants.ʃ === "ʃ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="34" checked={languageConsonants[34] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʒ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʒ" checked={languageConsonants.ʒ === "ʒ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="35" checked={languageConsonants[35] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʂ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʂ" checked={languageConsonants.ʂ === "ʂ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="36" checked={languageConsonants[36] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʐ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʐ" checked={languageConsonants.ʐ === "ʐ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="37" checked={languageConsonants[37] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ç</label>
-                                    <input className="form-check-input" type="checkbox" name="ç" checked={languageConsonants.ç === "ç"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="38" checked={languageConsonants[38] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʝ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʝ" checked={languageConsonants.ʝ === "ʝ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="39" checked={languageConsonants[39] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">x</label>
-                                    <input className="form-check-input" type="checkbox" name="x" checked={languageConsonants.x === "x"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="40" checked={languageConsonants[40] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɣ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɣ" checked={languageConsonants.ɣ === "ɣ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="41" checked={languageConsonants[41] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">χ</label>
-                                    <input className="form-check-input" type="checkbox" name="χ" checked={languageConsonants.χ === "χ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="42" checked={languageConsonants[42] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʁ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʁ" checked={languageConsonants.ʁ === "ʁ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="43" checked={languageConsonants[43] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ħ</label>
-                                    <input className="form-check-input" type="checkbox" name="ħ" checked={languageConsonants.ħ === "ħ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="44" checked={languageConsonants[44] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʕ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʕ" checked={languageConsonants.ʕ === "ʕ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="45" checked={languageConsonants[45] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">h</label>
-                                    <input className="form-check-input" type="checkbox" name="h" checked={languageConsonants.h === "h"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="46" checked={languageConsonants[46] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɦ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɦ" checked={languageConsonants.ɦ === "ɦ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="47" checked={languageConsonants[47] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                             </tr>
                             <tr>
@@ -807,11 +812,11 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɬ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɬ" checked={languageConsonants.ɬ === "ɬ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="48" checked={languageConsonants[48] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɮ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɮ" checked={languageConsonants.ɮ === "ɮ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="49" checked={languageConsonants[49] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -830,31 +835,31 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʋ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʋ" checked={languageConsonants.ʋ === "ʋ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="50" checked={languageConsonants[50] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɹ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɹ" checked={languageConsonants.ɹ === "ɹ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="51" checked={languageConsonants[51] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɻ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɻ" checked={languageConsonants.ɻ === "ɻ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="52" checked={languageConsonants[52] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">j</label>
-                                    <input className="form-check-input" type="checkbox" name="j" checked={languageConsonants.j === "j"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="53" checked={languageConsonants[53] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɰ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɰ" checked={languageConsonants.ɰ === "ɰ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="54" checked={languageConsonants[54] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -874,24 +879,24 @@ export default function AddLanguage() {
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">l</label>
-                                    <input className="form-check-input" type="checkbox" name="l" checked={languageConsonants.l === "l"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="55" checked={languageConsonants[55] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ɭ</label>
-                                    <input className="form-check-input" type="checkbox" name="ɭ" checked={languageConsonants.ɭ === "ɭ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="56" checked={languageConsonants[56] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʎ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʎ" checked={languageConsonants.ʎ === "ʎ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="57" checked={languageConsonants[57] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td>
                                     <label className="form-check-label w-100" htmlFor="flexCheckChecked">ʟ</label>
-                                    <input className="form-check-input" type="checkbox" name="ʟ" checked={languageConsonants.ʟ === "ʟ"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
+                                    <input className="form-check-input" type="checkbox" name="58" checked={languageConsonants[58] === "true"} id="consonant" onChange={(e)=>onSoundSelect(e)}/>
                                 </td>
                                 <td></td>
                                 <td></td>

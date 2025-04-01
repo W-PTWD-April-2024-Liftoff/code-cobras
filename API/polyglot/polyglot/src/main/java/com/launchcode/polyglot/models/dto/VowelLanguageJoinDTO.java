@@ -1,12 +1,12 @@
 package com.launchcode.polyglot.models.dto;
 
 public class VowelLanguageJoinDTO {
-    private int vowelId;
     private int languageId;
+    private int vowelId;
 
     public VowelLanguageJoinDTO(int languageId, int vowelId) {
-        this.vowelId = vowelId;
         this.languageId = languageId;
+        this.vowelId = vowelId;
     }
 
     public int getLanguageId() {

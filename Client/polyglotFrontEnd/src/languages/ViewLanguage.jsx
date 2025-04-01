@@ -33,6 +33,12 @@ export default function ViewLanguage() {
         loadVowels(url);        
     }, []);
 
+    useEffect(()=>{
+        const queryParams = window.location.search;
+        const url = `http://localhost:8080/language/consonants/${queryParams}`;
+        loadConsonants(url);        
+    }, []);
+
     const loadLanguages = async (url) => {
         try {
             const response = await fetch(url);
@@ -42,11 +48,10 @@ export default function ViewLanguage() {
             const data = await response.json();
             setLanguage(data); // Save the response data into state
             console.log(data);
-
             
             setColor(getRandomColor());
             } catch (err) {
-            setError(err.message);
+                setError(err.message);
             }
     }
 
@@ -92,11 +97,27 @@ export default function ViewLanguage() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            setVowelData(data); 
             console.log('Vowel Data:', data);
+            setVowelData(data); 
         } catch (err) {
             setError(err.message);
         }
+        
+    };
+
+    const loadConsonants = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Consonant Data:', data);
+            setConsonantData(data); 
+        } catch (err) {
+            setError(err.message);
+        }
+        
     };
 
     const handleBackButton = () => {
@@ -302,24 +323,46 @@ export default function ViewLanguage() {
 
                         {/* Vowels */}
                         {vowelData.length > 0 && (
-                            <div className="vowel-data-section">
-                                <h6>Vowels for this Language:</h6>
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                            <div className="vowel-data-section mb-3">
+                                <h6>Vowels</h6>
+                                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
                                     {vowelData.map((vowel, index) => (
                                         <div
                                             key={index}
                                             style={{
-                                                border: '2px solid #000', // Black border around each vowel
+                                                border: '1px solid #000', 
                                                 borderRadius: '15px', // Rounded corners
-                                                padding: '8px 15px', // Padding for spacing inside the border
-                                                fontSize: '16px', // Adjust font size as needed
-                                                backgroundColor: '#f5f5f5', // Light background color
-                                                textAlign: 'center', // Center the text inside each box
-                                                fontWeight: 'bold', // Make the text bold
-                                                display: 'inline-block', // Ensure it stays inline
+                                                padding: '8px 15px', // Padding inside the border
+                                                fontSize: '16px', 
+                                                textAlign: 'center', 
+                                                display: 'inline-block', 
                                             }}
                                         >
-                                            {vowel.name} {/* Assuming vowelName is the name of the vowel */}
+                                            {vowel.name} 
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Consonants */}
+                        {consonantData.length > 0 && (
+                            <div className="consonant-data-section mb-3">
+                                <h6>Consonants</h6>
+                                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                                    {consonantData.map((consonant, index) => (
+                                        <div
+                                            key={index}
+                                            style={{
+                                                border: '1px solid #000', 
+                                                borderRadius: '15px', // Rounded corners
+                                                padding: '8px 15px', // Padding inside the border
+                                                fontSize: '16px', 
+                                                textAlign: 'center', 
+                                                display: 'inline-block', 
+                                            }}
+                                        >
+                                            {consonant.name} 
                                         </div>
                                     ))}
                                 </div>

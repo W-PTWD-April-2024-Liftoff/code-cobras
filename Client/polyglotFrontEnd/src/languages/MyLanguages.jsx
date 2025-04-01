@@ -2,13 +2,10 @@ import {useState,useEffect} from 'react';
 import api from '../api/languages';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../security/AuthContext';
-import { useAuth } from '../security/AuthContext';
 
 export default function MyLanguages() {
     //Allows for navigate and redirection after an event. 
     let navigate = useNavigate();
-    const {loggedInUser} = useAuth();
-
     const [languages,setLanguages] = useState([]);
     const [error,setError] = useState([]);
     const {loggedInUser} = useAuth();

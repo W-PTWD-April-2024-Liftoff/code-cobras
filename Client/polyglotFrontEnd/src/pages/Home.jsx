@@ -13,6 +13,8 @@ export default function Home() {
     const [colorMap, setColorMap] = useState(new Map());
     const [comments, setComments] = useState([]); //All comments
     const [newComment, setNewComment] = useState('');
+    const [vowelData, setVowelData] = useState([]);
+    const [consonantData, setConsonantData] = useState([]);
     const {loggedInUser} = useAuth();
     const [filteredLanguages, setFilteredLanguages] = useState([]);
 
@@ -33,6 +35,14 @@ export default function Home() {
 
     useEffect(()=>{
         loadComments(); 
+    }, []);
+
+    useEffect(()=>{
+        loadVowels();        
+    }, []);
+    
+    useEffect(()=>{
+        loadConsonants();        
     }, []);
 
     useEffect(()=>{
@@ -78,6 +88,34 @@ export default function Home() {
             setError(err.message);
         }
     }
+
+    const loadVowels = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/language/allvowels`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Vowel Data:', data);
+            setVowelData(data); 
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const loadConsonants = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/language/allconsonants`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Consonant Data:', data);
+            setConsonantData(data); 
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     const filterLanguages = (event) => {
         //const searchTerm = event.target.value.toLowerCase();
@@ -325,6 +363,55 @@ export default function Home() {
                                         </h5>
                                         <p className="card-text">{language.description}</p>
                                     </div>
+
+                                    {/* Vowels */}
+                                    {vowelData[language.id] && vowelData[language.id].length > 0 && (
+                                        <div className="vowel-data-section mb-3">
+                                            <h6>Vowels</h6>
+                                            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                                                {vowelData[language.id].map((vowel, index) => (
+                                                    <div
+                                                        key={index}
+                                                        style={{
+                                                            border: '1px solid #000', 
+                                                            borderRadius: '15px', // Rounded corners
+                                                            padding: '8px 15px', // Padding inside the border
+                                                            fontSize: '16px', 
+                                                            textAlign: 'center', 
+                                                            display: 'inline-block', 
+                                                        }}
+                                                    >
+                                                        {vowel.name} 
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    
+                                    {/* Consonants */}
+                                    {consonantData[language.id] && consonantData[language.id].length > 0 && (
+                                        <div className="consonant-data-section mb-3">
+                                            <h6>Consonants</h6>
+                                            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                                                {consonantData[language.id].map((consonant, index) => (
+                                                    <div
+                                                        key={index}
+                                                        style={{
+                                                            border: '1px solid #000', 
+                                                            borderRadius: '15px', // Rounded corners
+                                                            padding: '8px 15px', // Padding inside the border
+                                                            fontSize: '16px', 
+                                                            textAlign: 'center', 
+                                                            display: 'inline-block', 
+                                                        }}
+                                                    >
+                                                        {consonant.name} 
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Comment Section */}
                                     <div className="card-footer">

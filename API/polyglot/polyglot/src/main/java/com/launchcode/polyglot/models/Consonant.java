@@ -22,6 +22,7 @@ public class Consonant {
     private String place;
     private String manner;
     private String voicing;
+    private String unicode;
 
     @ManyToMany(mappedBy = "consonants")
     @JsonBackReference
