@@ -1,8 +1,7 @@
 package com.launchcode.polyglot.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -10,7 +9,7 @@ import lombok.Data;
 public class Comment {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String username;
@@ -18,8 +17,17 @@ public class Comment {
     private String accessFlag;
     private String languageName;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    //Constructor
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "language_id")
+    private Language language;
+
+    public Comment() {}
+
     public Comment(int id, String username, String commentBody, String accessFlag, String languageName) {
         this.id = id;
         this.username = username;
@@ -27,8 +35,4 @@ public class Comment {
         this.accessFlag = accessFlag;
         this.languageName = languageName;
     }
-    public Comment() {
-
-    }
-
 }

@@ -154,24 +154,34 @@ export default function ViewLanguage() {
     }
 
     //Post new comment
-    const onSubmit = async (e, languageName) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-
+    
+        if (!language || !language.name) {
+            console.log("language.name is still undefined");
+            return;
+        }
+    
         const formData = new FormData();
         formData.append('username', loggedInUser);
         formData.append('commentBody', newComment);
         formData.append('accessFlag', 'public');
-        formData.append('languageName', languageName);
-            
+        formData.append('languageName', language.name);
+    
+        console.log('FormData entries:');
+        for (let [key, val] of formData.entries()) {
+            console.log(`${key}: ${val}`);
+        }
+    
         try {
             const response = await api.post("http://localhost:8080/addcomment", formData);
             console.log(response.data);
-            loadComments(); // update state to include posted comment
+            loadComments(); // refresh comment list
+            setNewComment('');
         } catch (error) {
             console.log(`Error: ${error.message}`);
         }
-        setNewComment(''); // reset comment state
-    }
+    };
 
     //Delete Comment
     const [deletePopup, setDeletePopup] = useState(false);

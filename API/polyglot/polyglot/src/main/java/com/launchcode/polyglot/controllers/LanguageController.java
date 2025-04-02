@@ -21,9 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://localhost:5173",
-        allowCredentials = "true",
-        maxAge = 10000)
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", maxAge = 10000)
 @RestController
 public class LanguageController {
 
@@ -40,39 +38,47 @@ public class LanguageController {
     private SyllableRepository syllableRepository;
 
     @PostMapping("/addlanguage")
-    public ResponseEntity<Map<String, Object>> addLanguage(@RequestParam(required = true) String name,
-                                              @RequestParam(required = true) String description,
-                                              @RequestParam(required = true) String accessFlag,
-                                              @RequestParam(required = true) String username,
-                                              @RequestParam(value = "image", required = false) MultipartFile image) {
+    public ResponseEntity<Map<String, Object>> addLanguage(
+            @RequestParam String name,
+            @RequestParam String description,
+            @RequestParam String accessFlag,
+            @RequestParam String username,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+
         Language existingLanguage = languageRepository.findByName(name);
 
         if (existingLanguage != null) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Language of that name already exists");
             response.put("id", existingLanguage.getId());
+            response.put("name", existingLanguage.getName());
             return ResponseEntity.ok(response);
-        } else {
-            try {
-                Language language = new Language();
-                language.setName(name);
-                language.setDescription(description);
-                language.setAccessFlag(accessFlag);
-                language.setUsername(username);
-                if (image != null && !image.isEmpty()) {
-                    language.setImage(image.getBytes()); // Save image as byte array
-                }
-                languageRepository.save(language);
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Language successfully added");
-                response.put("id", language.getId());
-                return ResponseEntity.ok(response);
-            } catch (IOException e) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Image could not be added.");
-                response.put("id", "null");
-                return ResponseEntity.ok(response);
+        }
+
+        try {
+            Language language = new Language();
+            language.setName(name);
+            language.setDescription(description);
+            language.setAccessFlag(accessFlag);
+            language.setUsername(username);
+
+            if (image != null && !image.isEmpty()) {
+                language.setImage(image.getBytes());
             }
+
+            languageRepository.save(language);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Language successfully added");
+            response.put("id", language.getId());
+            response.put("name", language.getName());
+            return ResponseEntity.ok(response);
+
+        } catch (IOException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Image could not be added.");
+            response.put("id", null);
+            return ResponseEntity.ok(response);
         }
     }
 
@@ -181,9 +187,10 @@ public class LanguageController {
         Optional<Language> returnLanguage = languageRepository.findById(id);
         String accessFlag = returnLanguage.get().getAccessFlag();
         if (accessFlag != null && accessFlag.equals("public")) {
-            return ResponseEntity.ok(returnLanguage);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(returnLanguage);
+
     }
 
     //All Vowel data

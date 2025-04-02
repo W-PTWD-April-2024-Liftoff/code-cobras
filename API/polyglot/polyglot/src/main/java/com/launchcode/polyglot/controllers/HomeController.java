@@ -3,9 +3,11 @@ package com.launchcode.polyglot.controllers;
 import com.launchcode.polyglot.models.Comment;
 import com.launchcode.polyglot.models.Connection;
 import com.launchcode.polyglot.models.Language;
+import com.launchcode.polyglot.models.User;
 import com.launchcode.polyglot.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ public class HomeController {
 
     @Autowired
     private ConsonantRepository consonantRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<Language>> getAllLanguages() {
@@ -79,18 +83,29 @@ public class HomeController {
         }
     }
 
-    @PostMapping("/addcomment")
-    public ResponseEntity<String> addComment(@RequestParam(required = true) String username,
-                                       @RequestParam(required = true) String commentBody,
-                                       @RequestParam(required = true) String accessFlag,
-                                       @RequestParam(required = true) String languageName) {
-
+    @PostMapping(value = "/addcomment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> addComment(
+            @RequestParam("username") String username,
+            @RequestParam("commentBody") String commentBody,
+            @RequestParam("accessFlag") String accessFlag,
+            @RequestParam("languageName") String languageName
+    ) {
         try {
+            User user = userRepository.findByUsername(username);
+            Language language = languageRepository.findByName(languageName.trim());
+
+            if (user == null || language == null) {
+                return ResponseEntity.badRequest().body("Invalid username or language name.");
+            }
+
             Comment comment = new Comment();
             comment.setUsername(username);
+            comment.setLanguageName(languageName);
             comment.setCommentBody(commentBody);
             comment.setAccessFlag(accessFlag);
-            comment.setLanguageName(languageName);
+            comment.setUser(user);
+            comment.setLanguage(language);
+
             commentRepository.save(comment);
             return ResponseEntity.ok("Comment added successfully");
         } catch (Exception e) {

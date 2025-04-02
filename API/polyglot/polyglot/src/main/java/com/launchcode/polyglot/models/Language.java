@@ -1,5 +1,6 @@
 package com.launchcode.polyglot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,15 +14,22 @@ import java.util.Objects;
 public class Language {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
     private String description;
     private String accessFlag;
     private String username;
+
+    @OneToMany(mappedBy = "language", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @JsonIgnore
+    private List<Comment> comments = new ArrayList<>();
+
     @Lob
     private byte[] image;
+
     private String imageBase64;
 
     @ManyToMany
@@ -31,7 +39,7 @@ public class Language {
             inverseJoinColumns = @JoinColumn(name = "vowel_id")
     )
     @JsonManagedReference
-    private List<Vowel> vowels;
+    private List<Vowel> vowels = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -40,9 +48,8 @@ public class Language {
             inverseJoinColumns = @JoinColumn(name = "consonant_id")
     )
     @JsonManagedReference
-    private List<Consonant> consonants;
+    private List<Consonant> consonants = new ArrayList<>();
 
-    //Constructor
     public Language(String name, String description, String accessFlag, String username, byte[] image) {
         this.name = name;
         this.description = description;
@@ -51,9 +58,7 @@ public class Language {
         this.image = image;
     }
 
-    public Language() {
-
-    }
+    public Language() {}
 
     @Override
     public String toString() {
