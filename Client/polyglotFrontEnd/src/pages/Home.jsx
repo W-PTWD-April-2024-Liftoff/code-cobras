@@ -119,11 +119,67 @@ export default function Home() {
 
     const filterLanguages = (event) => {
         //const searchTerm = event.target.value.toLowerCase();
-        console.log(languages);
-        const newFilteredData = languages.filter(item =>
-          item.name.toLowerCase().includes(filters.language.toLowerCase())
-        );
+
+        const languageIdsByVowel = [];
+
+        if(filters.vowel != ""){
+            for (const languageId in vowelData) {
+            for (const obj of vowelData[languageId]) {
+                if (obj.hasOwnProperty('name')) {
+                if (obj['name'].includes(filters.vowel)) {
+                    languageIdsByVowel.push(parseInt(languageId));
+                    break;
+                }
+                }
+            }
+            }  
+        }
+        const languageIdsByConsonant = [];
+
+        if(filters.consonant != ""){
+            for (const languageId in consonantData) {
+            for (const obj of consonantData[languageId]) {
+                if (obj.hasOwnProperty('name')) {
+                if (obj['name'].includes(filters.consonant)) {
+                    languageIdsByConsonant.push(parseInt(languageId));
+                    break;
+                }
+                }
+            }
+            }   
+        }
+        
+        //console.log(filters.language);
+        const languageIdsByLanguage = [];
+
+        if(filters.language != 0){
+            languageIdsByLanguage.push(parseInt(filters.language));
+
+        } 
+        
+        //console.log(languageIdsByLanguage);
+
+        //console.log(languages);
+        let newFilteredData;
+        if(languageIdsByLanguage.length === 0 && languageIdsByVowel.length === 0 && languageIdsByConsonant.length === 0){
+            newFilteredData= languages
+        } 
+        else {
+            newFilteredData = languages
+            .filter(
+                item => 
+                    //item.name.toLowerCase().includes(filters.language.toLowerCase())  ||
+                languageIdsByLanguage.includes(item.id  )
+                || languageIdsByVowel.includes(item.id  )  
+                || languageIdsByConsonant.includes(item.id )  
+            )
+            //.map(item => item.trim())
+        }
+
+        //.filter(item=>item.consonant.toLowerCase().includes(filters.consonant.toLowerCase))
+        //.filter(item=>item.vowel.toLowerCase().includes(filters.vowel.toLowerCase));
         //.map(item => ({ ...item, name: item.name.trim() }));
+        console.log(newFilteredData);
         setFilteredLanguages(newFilteredData);
         //console.log(filteredLanguages.length);
         //console.log(newFilteredData.length);

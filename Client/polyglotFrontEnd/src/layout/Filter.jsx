@@ -55,9 +55,9 @@ export default function Filter(props) {
           <tr><td>
                   Consonant: </td>
                   <td><select className="form-select  form-select-sm" name="consonant" value={consonant} onChange={handleChange}>
-                <option value="" disabled>Select</option>
+                <option value="" >Select</option>
                 {consonant_data.map((option) => (
-                  <option key={option.id} value={option.id}>
+                  <option key={option.id} value={option.name}>
                     {option.name}
                   </option>
                 ))}
@@ -66,9 +66,9 @@ export default function Filter(props) {
           <tr><td>
                   Vowel: </td>
                   <td><select className="form-select form-select-sm" name="vowel" value={vowel} onChange={handleChange}>
-                <option value="" disabled>Select</option>
+                <option value="" >Select</option>
                 {vowel_data.map((option) => (
-                  <option key={option.id} value={option.id}>
+                  <option key={option.id} value={option.name}>
                     {option.name}
                   </option>
                 ))}
@@ -78,9 +78,9 @@ export default function Filter(props) {
             <tr><td>
                   Language: </td>
                   <td><select className="form-select form-select-sm" name="language" value={language} onChange={handleChange}>
-                <option value="" disabled>Select</option>
+                <option value="" >Select</option>
                 {props.languages.map((option) => (
-                  <option key={option.id} value={option.name}>
+                  <option key={option.id} value={option.id}>
                     {option.name}
                   </option>
                 ))}
