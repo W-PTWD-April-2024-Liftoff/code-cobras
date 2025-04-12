@@ -53,40 +53,39 @@ public class LanguageController {
             response.put("id", existingLanguage.getId());
             response.put("name", existingLanguage.getName());
             return ResponseEntity.ok(response);
-        }
+        } else {
+            try {
+                Language language = new Language();
+                language.setName(name);
+                language.setDescription(description);
+                language.setAccessFlag(accessFlag);
+                language.setUsername(username);
 
-        try {
-            Language language = new Language();
-            language.setName(name);
-            language.setDescription(description);
-            language.setAccessFlag(accessFlag);
-            language.setUsername(username);
+                if (image != null && !image.isEmpty()) {
+                    language.setImage(image.getBytes());
+                }
 
-            if (image != null && !image.isEmpty()) {
-                language.setImage(image.getBytes());
+                languageRepository.save(language);
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("message", "Language successfully added");
+                response.put("id", language.getId());
+                response.put("name", language.getName());
+                return ResponseEntity.ok(response);
+
+            } catch (IOException e) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("message", "Image could not be added.");
+                response.put("id", null);
+                return ResponseEntity.ok(response);
             }
-
-            languageRepository.save(language);
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Language successfully added");
-            response.put("id", language.getId());
-            response.put("name", language.getName());
-            return ResponseEntity.ok(response);
-
-        } catch (IOException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Image could not be added.");
-            response.put("id", null);
-            return ResponseEntity.ok(response);
         }
+
+
     }
 
     @PostMapping("/addlanguage/vowels/{languageId}")
     public ResponseEntity<String> addVowels(@PathVariable int languageId, @RequestParam Map<String, String> vowels) {
-        System.out.println(vowels); // do languageId as a PathVariable instead?
-        System.out.println(languageId);
-        //int languageIdParsed = Integer.parseInt(languageId);
         Optional<Language> languageOpt = languageRepository.findById(languageId);
         if (!languageOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Language not found");
@@ -104,7 +103,6 @@ public class LanguageController {
                 if (vowel != null && !selectedVowels.contains(vowel)) {
                     selectedVowels.add(vowel.get());
                 }
-                System.out.println(selectedVowels);
             }
         }
         if (selectedVowels.isEmpty()) {
@@ -118,8 +116,6 @@ public class LanguageController {
 
     @PostMapping("/addlanguage/consonants/{languageId}")
     public ResponseEntity<String> addConsonants(@PathVariable int languageId, @RequestParam Map<String, String> consonants) {
-        System.out.println(consonants);
-        //int languageIdParsed = Integer.parseInt(languageId);
         Optional<Language> languageOpt = languageRepository.findById(languageId);
         if (!languageOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Language not found");
@@ -151,9 +147,29 @@ public class LanguageController {
         return ResponseEntity.ok("Consonants successfully added");
     }
 
-    @PostMapping("/addlanguage/syllables")
-    public ResponseEntity<String> addSyllable() {
-        return ResponseEntity.ok("");
+    @PostMapping("/addlanguage/syllable/{languageId}")
+    public ResponseEntity<String> addSyllable(@PathVariable int languageId, @RequestParam(required=true) int onsetLength,
+                                              @RequestParam(required=true) int codaLength,
+                                              @RequestParam(required=true) int onsetRequiredLength,
+                                              @RequestParam(required=true) int codaRequiredLength) {
+        Optional<Language> languageOpt = languageRepository.findById(languageId);
+        if (!languageOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Language not found");
+        }
+        Language language = languageOpt.get();
+
+        try {
+            Syllable syllable = new Syllable();
+            syllable.setOnsetLength(onsetLength);
+            syllable.setCodaLength(codaLength);
+            syllable.setOnsetRequiredLength(onsetRequiredLength);
+            syllable.setCodaRequiredLength(codaRequiredLength);
+            syllable.setLanguage(language);
+            syllableRepository.save(syllable);
+            return ResponseEntity.ok("Syllable successfully saved");
+        } catch (Error e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Syllable could not be added.");
+        }
     }
 
     @GetMapping("/languages")
@@ -183,14 +199,19 @@ public class LanguageController {
     }
 
     @GetMapping("/viewlanguage")
-    public ResponseEntity<Optional<Language>> getLanguage(@RequestParam(required = true) int id) {
+    public ResponseEntity<Language> getLanguage(@RequestParam(required = true) int id) {
         Optional<Language> returnLanguage = languageRepository.findById(id);
+        if (!returnLanguage.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        Language language = returnLanguage.get();
         String accessFlag = returnLanguage.get().getAccessFlag();
         if (accessFlag != null && accessFlag.equals("public")) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.ok(language);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
-        return ResponseEntity.ok(returnLanguage);
-
     }
 
     //All Vowel data
@@ -217,9 +238,6 @@ public class LanguageController {
         List<Vowel> vowels = new ArrayList<>();
         for (VowelLanguageJoinDTO joinDTO : returnList) {
             Optional<Vowel> optionalVowel = vowelRepository.findById(joinDTO.getVowelId());
-            if (optionalVowel.isPresent()) {
-            } else {
-            }
             optionalVowel.ifPresent(vowels::add);
         }
         if (!vowels.isEmpty()) {
@@ -232,7 +250,6 @@ public class LanguageController {
     @GetMapping("/language/allconsonants")
     public ResponseEntity<Map<Integer, List<Consonant>>> getAllConsonantLanguageJoinData() {
         List<ConsonantLanguageJoinDTO> returnList = consonantRepository.findLanguageConsonantJoinData();
-        System.out.println(returnList);
         Map<Integer, List<Consonant>> fullReturnList = new HashMap<>();
         for (ConsonantLanguageJoinDTO joinDTO : returnList) {
             Integer languageId = joinDTO.getLanguageId();
@@ -260,22 +277,146 @@ public class LanguageController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    @GetMapping("/languages/syllable")
-//    public ResponseEntity<List<Syllable>> getAllVSyllables() {
-//        List<Syllable> allSyllables = syllableRepository.findAll();
-//        return ResponseEntity.ok(allSyllables);
-//    }
+    //Get All Syllable data
+    @GetMapping("/language/allsyllables")
+    public ResponseEntity<Map<Integer, List<Syllable>>> getAllPublicSyllables() {
+        List<Syllable> syllables = syllableRepository.findByLanguageAccessFlag("public");
+        Map<Integer, List<Syllable>> fullReturnList = new HashMap<>();
 
-    //Edit a language
+        if (syllables.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        for (Syllable syllable : syllables) {
+            Integer languageId = syllable.getLanguage().getId();
+            fullReturnList.putIfAbsent(languageId, new ArrayList<>());
+            fullReturnList.get(languageId).add(syllable);
+        }
+
+        return ResponseEntity.ok(fullReturnList);
+    }
+
+
+    //Get Syllable data for specific language
+    @GetMapping("/language/syllable/")
+    public ResponseEntity<Syllable> getSyllableByLanguage(@RequestParam(required = true) int id) {
+        Optional<Language> languageOpt = languageRepository.findById(id);
+        if (!languageOpt.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Syllable syllable = languageOpt.get().getSyllable();
+        if (syllable == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok(syllable);
+    }
+
+    //Edit Language
     @PutMapping("/editlanguage/{id}")
-    public Language editLanguage(@RequestBody Language newLanguage, @PathVariable int id) {
-        return languageRepository.findById(id)
-                .map(language -> {
-                    language.setName(newLanguage.getName());
-                    language.setDescription(newLanguage.getDescription());
-                    language.setAccessFlag(newLanguage.getAccessFlag());
-                    return languageRepository.save(language);
-                }).orElseThrow(()->new LanguageNotFoundException(id));
+    public ResponseEntity<String> editLanguage(@PathVariable int id,
+                                               @RequestParam(required = true) String name,
+                                               @RequestParam(required = true) String description,
+                                               @RequestParam(required = true) String accessFlag,
+                                               @RequestParam(value = "image", required = false) MultipartFile image) {
+        Optional<Language> language = languageRepository.findById(id);
+
+        if (language.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Language with id " + id + " not found.");
+        }
+        Language existingLanguage = language.get();
+
+        try {
+            existingLanguage.setName(name);
+            existingLanguage.setDescription(description);
+            existingLanguage.setAccessFlag(accessFlag);
+            if (image != null && !image.isEmpty()) {
+                existingLanguage.setImage(image.getBytes()); // Save image as byte array
+            }
+            languageRepository.save(existingLanguage);
+            return ResponseEntity.ok("Language successfully saved");
+        } catch (IOException e) {
+            return ResponseEntity.ok("Image could not be updated.");
+        }
+    }
+
+    @PutMapping("/editlanguage/vowels/{languageId}")
+    public ResponseEntity<String> editVowels(@PathVariable int languageId, @RequestParam Map<String, String> vowels) {
+        Optional<Language> languageOpt = languageRepository.findById(languageId);
+        if (!languageOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Language not found");
+        }
+        Language language = languageOpt.get();
+
+        List<Vowel> editedVowels = new ArrayList<>();
+        List<VowelLanguageJoinDTO> currentVowels = vowelRepository.findLanguageVowelJoinDataByLanguage(language.getId());
+
+        for (Map.Entry<String, String> vowelEntry : vowels.entrySet()) {
+            Integer vowelId = Integer.parseInt(vowelEntry.getKey());
+            String vowelPresence = vowelEntry.getValue();
+
+
+            if (vowelPresence.equals("true")) {
+                Optional<Vowel> vowel = vowelRepository.findById(vowelId);
+                if (vowel != null && !editedVowels.contains(vowel)) {
+                    editedVowels.add(vowel.get());
+                }
+            } else {
+                Optional<VowelLanguageJoinDTO> existingJoin = currentVowels.stream()
+                        .filter(join -> join.getLanguageId() == languageId && join.getVowelId() == vowelId)
+                        .findFirst();
+                existingJoin.ifPresent(vowelLanguageJoinDTO -> {
+                    vowelRepository.deleteVowelLanguageJoin(languageId, vowelId);
+                });
+            }
+        }
+        if (editedVowels.isEmpty()) {
+            return ResponseEntity.ok("Vowels could not be edited.");
+        }
+
+        language.getVowels().clear();
+        language.getVowels().addAll(editedVowels);
+        languageRepository.save(language);
+        return ResponseEntity.ok("Vowels successfully added");
+    }
+
+    @PutMapping("/editlanguage/consonants/{languageId}")
+    public ResponseEntity<String> editConsonants(@PathVariable int languageId, @RequestParam Map<String, String> consonants) {
+        Optional<Language> languageOpt = languageRepository.findById(languageId);
+        if (!languageOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Language not found");
+        }
+        Language language = languageOpt.get();
+
+        List<Consonant> editedConsonants = new ArrayList<>();
+        List<ConsonantLanguageJoinDTO> currentConsonant = consonantRepository.findLanguageConsonantJoinDataByLanguage(language.getId());
+
+        for (Map.Entry<String, String> consonantEntry : consonants.entrySet()) {
+            Integer consonantId = Integer.parseInt(consonantEntry.getKey());
+            String consonantPresence = consonantEntry.getValue();
+
+            if (consonantPresence.equals("true")) {
+                Optional<Consonant> consonant = consonantRepository.findById(consonantId);
+                if (consonant != null && !editedConsonants.contains(consonant)) {
+                    editedConsonants.add(consonant.get());
+                }
+            } else {
+                Optional<ConsonantLanguageJoinDTO> existingJoin = currentConsonant.stream()
+                        .filter(join -> join.getLanguageId() == languageId && join.getConsonantId() == consonantId)
+                        .findFirst();
+                existingJoin.ifPresent(consonantLanguageJoinDTO -> {
+                    consonantRepository.deleteConsonantLanguageJoin(languageId, consonantId);
+                });
+            }
+        }
+        if (editedConsonants.isEmpty()) {
+            return ResponseEntity.ok("Consonants could not be edited.");
+        }
+
+        language.getConsonants().clear();
+        language.getConsonants().addAll(editedConsonants);
+        languageRepository.save(language);
+        return ResponseEntity.ok("Consonants successfully added");
     }
 
     //Edit a language's image
@@ -296,9 +437,26 @@ public class LanguageController {
         return new ResponseEntity<>("Language not found", HttpStatus.NOT_FOUND);
     }
 
-    //Update vowels
+    @PutMapping("/editlanguage/syllable")
+    public ResponseEntity<String> updateSyllableByLanguage(@RequestParam(required = false) Integer syllableId,
+                                                           @RequestParam(required = false) Integer onsetLength,
+                                                           @RequestParam(required = false) Integer codaLength,
+                                                           @RequestParam(required = false) Integer onsetRequiredLength,
+                                                           @RequestParam(required = false) Integer codaRequiredLength) {
 
-    //Update consonants
+        Optional<Syllable> syllableOpt = syllableRepository.findById(syllableId);
+        if (!syllableOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Syllable not found");
+        }
+        Syllable syllable = syllableOpt.get();
+        syllable.setOnsetLength(onsetLength);
+        syllable.setCodaLength(codaLength);
+        syllable.setOnsetRequiredLength(onsetRequiredLength);
+        syllable.setCodaRequiredLength(codaRequiredLength);
+
+        syllableRepository.save(syllable);
+        return ResponseEntity.ok("Syllable successfully updated");
+    }
 
     //Delete language
     @DeleteMapping("/deletelanguage/{id}")
@@ -321,5 +479,21 @@ public class LanguageController {
             return ResponseEntity.ok("Image deleted successfully");
         }
         return new ResponseEntity<>("Language not found", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/deletelanguage/syllable/{languageId}")
+    public ResponseEntity<String> deleteSyllableByLanguageId(@PathVariable int languageId) {
+        Optional<Language> languageOpt = languageRepository.findById(languageId);
+        if (!languageOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Language not found");
+        }
+
+        Syllable syllable = languageOpt.get().getSyllable();
+        if (syllable == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Syllable found for this Language");
+        }
+
+        syllableRepository.delete(syllable);
+        return ResponseEntity.ok("Syllable successfully deleted for Language ID: " + languageId);
     }
 }

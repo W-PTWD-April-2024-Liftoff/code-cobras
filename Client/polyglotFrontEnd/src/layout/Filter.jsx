@@ -87,7 +87,7 @@ export default function Filter(props) {
               </select>
               
             </td></tr>            
-           <tr><td colspan="2"><button className='btn btn-primary' type="submit">Filter</button></td></tr>
+           <tr><td colSpan="2"><button className='btn btn-primary' type="submit">Filter</button></td></tr>
            </tbody>
         </table>
         </form>

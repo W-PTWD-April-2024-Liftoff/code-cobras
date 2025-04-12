@@ -15,6 +15,7 @@ export default function ViewLanguage() {
     const [newComment, setNewComment] = useState('');
     const [vowelData, setVowelData] = useState([]);
     const [consonantData, setConsonantData] = useState([]);
+    const [syllableData, setSyllableData] = useState({});
     const {loggedInUser} = useAuth();
 
     useEffect(()=>{
@@ -39,6 +40,13 @@ export default function ViewLanguage() {
         loadConsonants(url);        
     }, []);
 
+    useEffect(()=>{
+        const queryParams = window.location.search;
+        console.log(queryParams)
+        const url = `http://localhost:8080/language/syllable/${queryParams}`;
+        loadSyllables(url);        
+    }, []);
+
     const loadLanguages = async (url) => {
         try {
             const response = await fetch(url);
@@ -50,9 +58,9 @@ export default function ViewLanguage() {
             console.log(data);
             
             setColor(getRandomColor());
-            } catch (err) {
-                setError(err.message);
-            }
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     const toggleFavorite = (languageId) => {
@@ -102,7 +110,6 @@ export default function ViewLanguage() {
         } catch (err) {
             setError(err.message);
         }
-        
     };
 
     const loadConsonants = async (url) => {
@@ -117,7 +124,20 @@ export default function ViewLanguage() {
         } catch (err) {
             setError(err.message);
         }
-        
+    };
+
+    const loadSyllables = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Syllable Data:', data);
+            setSyllableData(data); 
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
     const handleBackButton = () => {
@@ -146,6 +166,16 @@ export default function ViewLanguage() {
             return 'image/jpeg';
         }
         return 'image/jpeg'; // Default to JPEG
+    };
+
+    //Syllable display logic
+    const renderSyllableItems = (length, requiredLength) => {
+        const requiredC = Array.from({ length: requiredLength }, (_, i) => "C");
+        const unrequiredC = Array.from({ length: length - requiredLength }, (_, i) => "( C )");
+
+        return [...requiredC, ...unrequiredC].map((item, index) => (
+            <span key={index}>{item} </span>
+        ));
     };
 
     //Comments
@@ -264,184 +294,196 @@ export default function ViewLanguage() {
             </div>
                 
             <div className="m-5 p-2 shadow border-2 rounded" >
-                    <div className="card position-relative">
-                        {/* Language Profile Picture */}
-                        {language.image ? (
-                            <img 
-                            src={`data:${getMimeTypeFromBase64(language.image)};base64,${language.image}`}
-                            alt="ProfilePicture"
+                <div className="card position-relative">
+                    {/* Language Profile Picture */}
+                    {language.image ? (
+                        <img 
+                        src={`data:${getMimeTypeFromBase64(language.image)};base64,${language.image}`}
+                        alt="ProfilePicture"
+                        className="position-absolute rounded-circle"
+                        style={{
+                            top: '10px',
+                            left: '10px',
+                            width: '50px',
+                            height: '50px',
+                        }}
+                    />
+                    ) : (
+                        <div
                             className="position-absolute rounded-circle"
                             style={{
                                 top: '10px',
                                 left: '10px',
                                 width: '50px',
                                 height: '50px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: color, 
+                                color: 'white',
+                                fontSize: '24px',
+                                fontWeight: 'bold',
+                                fontFamily: "Lobster", 
                             }}
-                        />
-                        ) : (
-                            <div
-                                className="position-absolute rounded-circle"
-                                style={{
-                                    top: '10px',
-                                    left: '10px',
-                                    width: '50px',
-                                    height: '50px',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    backgroundColor: color, 
-                                    color: 'white',
-                                    fontSize: '24px',
-                                    fontWeight: 'bold',
-                                    fontFamily: "Lobster", 
-                                }}
-                            >
-                                {language.name ? language.name.charAt(0).toUpperCase() : "?"}
-                            </div>
-                        )}
-
-                        {/* Toggle Favorite */}
-                        {language.isFavorited ? (
-                            <FaHeart
-                                className="position-absolute text-danger"
-                                style={{
-                                    top: '10px',
-                                    right: '10px',
-                                    fontSize: '24px',
-                                    cursor: 'pointer',
-                                }}
-                                onClick={() => toggleFavorite(language.id)} // Toggle favorite status
-                            />
-                        ) : (
-                            <FaRegHeart
-                                className="position-absolute text-danger"
-                                style={{
-                                    top: '10px',
-                                    right: '10px',
-                                    fontSize: '24px',
-                                    cursor: 'pointer',
-                                }}
-                                onClick={() => toggleFavorite(language.id)} // Toggle favorite status
-                            />
-                        )}
-
-                        {/* Language Name and Link */}
-                        <div className="card-body pt-3">
-                            <h5 className="card-title mb-3 text-dark">{language.name}</h5>
-                            <p className="card-text">{language.description}</p>
+                        >
+                            {language.name ? language.name.charAt(0).toUpperCase() : "?"}
                         </div>
+                    )}
 
-                        {/* Vowels */}
-                        {vowelData.length > 0 && (
-                            <div className="vowel-data-section mb-3">
-                                <h6>Vowels</h6>
-                                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                                    {vowelData.map((vowel, index) => (
-                                        <div
-                                            key={index}
-                                            style={{
-                                                border: '1px solid #000', 
-                                                borderRadius: '15px', // Rounded corners
-                                                padding: '8px 15px', // Padding inside the border
-                                                fontSize: '16px', 
-                                                textAlign: 'center', 
-                                                display: 'inline-block', 
-                                            }}
-                                        >
-                                            {vowel.name} 
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+                    {/* Toggle Favorite */}
+                    {language.isFavorited ? (
+                        <FaHeart
+                            className="position-absolute text-danger"
+                            style={{
+                                top: '10px',
+                                right: '10px',
+                                fontSize: '24px',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => toggleFavorite(language.id)} // Toggle favorite status
+                        />
+                    ) : (
+                        <FaRegHeart
+                            className="position-absolute text-danger"
+                            style={{
+                                top: '10px',
+                                right: '10px',
+                                fontSize: '24px',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => toggleFavorite(language.id)} // Toggle favorite status
+                        />
+                    )}
 
-                        {/* Consonants */}
-                        {consonantData.length > 0 && (
-                            <div className="consonant-data-section mb-3">
-                                <h6>Consonants</h6>
-                                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                                    {consonantData.map((consonant, index) => (
-                                        <div
-                                            key={index}
-                                            style={{
-                                                border: '1px solid #000', 
-                                                borderRadius: '15px', // Rounded corners
-                                                padding: '8px 15px', // Padding inside the border
-                                                fontSize: '16px', 
-                                                textAlign: 'center', 
-                                                display: 'inline-block', 
-                                            }}
-                                        >
-                                            {consonant.name} 
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+                    {/* Language Name and Link */}
+                    <div className="card-body pt-3">
+                        <h5 className="card-title mb-3 text-dark">{language.name}</h5>
+                        <p className="card-text">{language.description}</p>
+                    </div>
 
-                        {/* Comment Section */}
-                        <div className="card-footer">
-                            <div>
-                                {loggedInUser === language.username && privateComment.length > 0 && (
-                                <div className="comments-list">
-                                    <h6>Private Comments</h6>
-                                    <div className="comment mb-2">
-                                        <div className="d-flex justify-content-start align-items-center">
-                                            <span className="text-muted">{privateComment[0].commentBody}</span>
-                                                <div className="ms-auto d-flex">
-                                                    <button className="btn btn-sm btn-light me-2 btn-outline-secondary"
-                                                        onClick={() => handleEdit(privateComment[0].id, privateComment[0].commentBody, privateComment[0].accessFlag, language.name)}>
-                                                        <FaPen/></button>
-                                                    <button className="btn btn-sm btn-light btn-outline-danger"
-                                                        onClick={() => handleEdit(privateComment[0].id, "No comments to display.", privateComment[0].accessFlag, language.name)}>
-                                                        <FaTrash/></button>
-                                                </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                )}
-                            </div>
-                            <h6>Comments</h6>
-                            {/* Comment Entries */}
-                            <div className="comments-list">
-                                {comments
-                                    .filter((comment) => comment.languageName === language.name) // Filter comments for the specific language
-                                    .map((filteredComment, commentIndex) => (
-                                    <div className="comment mb-2" key={commentIndex}>
-                                        <div className="d-flex justify-content-start align-items-center">
-                                            <strong className="me-2">{filteredComment.username}:</strong>
-                                            <span className="text-muted">{filteredComment.commentBody}</span>
-                                            {loggedInUser === filteredComment.username && (
-                                                <div className="ms-auto d-flex">
-                                                    <button className="btn btn-sm btn-light me-2 btn-outline-secondary"
-                                                        onClick={() => handleEdit(filteredComment.id, filteredComment.commentBody, filteredComment.accessFlag, language.name)}>
-                                                        <FaPen/></button>
-                                                    <button className="btn btn-sm btn-light btn-outline-danger"
-                                                        onClick={() => handleDelete(filteredComment.id)}
-                                                        >
-                                                        <FaTrash/></button>
-                                                </div>
-                                            )}
-                                        </div>
+                    {/* Vowels */}
+                    {vowelData.length > 0 && (
+                        <div className="vowel-data-section mb-3">
+                            <h6>Vowels</h6>
+                            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                                {vowelData.map((vowel, index) => (
+                                    <div
+                                        key={index}
+                                        style={{
+                                            border: '1px solid #000', 
+                                            borderRadius: '15px', // Rounded corners
+                                            padding: '8px 15px', // Padding inside the border
+                                            fontSize: '16px', 
+                                            textAlign: 'center', 
+                                            display: 'inline-block', 
+                                        }}
+                                    >
+                                        {vowel.name} 
                                     </div>
                                 ))}
                             </div>
+                        </div>
+                    )}
 
-                            {/* Comment Input */}
-                            <div className="input-group mt-3">
-                                <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Add a comment..."
-                                onChange={(e) => onInputChange(e)}
-                                />
-                                <button className="btn btn-outline-secondary" type="submit" onClick={(e)=> onSubmit(e, language.name)}>Post</button>
+                    {/* Consonants */}
+                    {consonantData.length > 0 && (
+                        <div className="consonant-data-section mb-3">
+                            <h6>Consonants</h6>
+                            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                                {consonantData.map((consonant, index) => (
+                                    <div
+                                        key={index}
+                                        style={{
+                                            border: '1px solid #000', 
+                                            borderRadius: '15px', // Rounded corners
+                                            padding: '8px 15px', // Padding inside the border
+                                            fontSize: '16px', 
+                                            textAlign: 'center', 
+                                            display: 'inline-block', 
+                                        }}
+                                    >
+                                        {consonant.name} 
+                                    </div>
+                                ))}
                             </div>
+                        </div>
+                    )}
+
+                    {/* Syllable Section */}
+                    {syllableData && (
+                    <div className="syllable-data-section mb-3">
+                        <h6>Syllable Structure</h6>    
+                        <div>
+                            {renderSyllableItems(syllableData.onsetLength, syllableData.onsetRequiredLength)} V{" "}
+                            {renderSyllableItems(syllableData.codaLength, syllableData.codaRequiredLength)}
+                        </div>
+                    </div>
+                    )}
+
+                    {/* Comment Section */}
+                    <div className="card-footer">
+                        <div>
+                            {loggedInUser === language.username && privateComment.length > 0 && (
+                            <div className="comments-list">
+                                <h6>Private Comments</h6>
+                                <div className="comment mb-2">
+                                    <div className="d-flex justify-content-start align-items-center">
+                                        <span className="text-muted">{privateComment[0].commentBody}</span>
+                                            <div className="ms-auto d-flex">
+                                                <button className="btn btn-sm btn-light me-2 btn-outline-secondary"
+                                                    onClick={() => handleEdit(privateComment[0].id, privateComment[0].commentBody, privateComment[0].accessFlag, language.name)}>
+                                                    <FaPen/></button>
+                                                <button className="btn btn-sm btn-light btn-outline-danger"
+                                                    onClick={() => handleEdit(privateComment[0].id, "No comments to display.", privateComment[0].accessFlag, language.name)}>
+                                                    <FaTrash/></button>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            )}
+                        </div>
+                        <h6>Comments</h6>
+                        {/* Comment Entries */}
+                        <div className="comments-list">
+                            {comments
+                                .filter((comment) => comment.languageName === language.name) // Filter comments for the specific language
+                                .map((filteredComment, commentIndex) => (
+                                <div className="comment mb-2" key={commentIndex}>
+                                    <div className="d-flex justify-content-start align-items-center">
+                                        <strong className="me-2">{filteredComment.username}:</strong>
+                                        <span className="text-muted">{filteredComment.commentBody}</span>
+                                        {loggedInUser === filteredComment.username && (
+                                            <div className="ms-auto d-flex">
+                                                <button className="btn btn-sm btn-light me-2 btn-outline-secondary"
+                                                    onClick={() => handleEdit(filteredComment.id, filteredComment.commentBody, filteredComment.accessFlag, language.name)}>
+                                                    <FaPen/></button>
+                                                <button className="btn btn-sm btn-light btn-outline-danger"
+                                                    onClick={() => handleDelete(filteredComment.id)}
+                                                    >
+                                                    <FaTrash/></button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Comment Input */}
+                        <div className="input-group mt-3">
+                            <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Add a comment..."
+                            onChange={(e) => onInputChange(e)}
+                            />
+                            <button className="btn btn-outline-secondary" type="submit" onClick={(e)=> onSubmit(e, language.name)}>Post</button>
                         </div>
                     </div>
                 </div>
-                <div id="deletePopup" className=''>
+            </div>
+
+            <div id="deletePopup" className=''>
                 {/* Confirmation Popup */}
                 {deletePopup && (
                     <div
@@ -512,11 +554,6 @@ export default function ViewLanguage() {
                     </div>
                 )}
             </div>            
-
-
-        </div>
-        
-
-        
+        </div>  
     )
 }

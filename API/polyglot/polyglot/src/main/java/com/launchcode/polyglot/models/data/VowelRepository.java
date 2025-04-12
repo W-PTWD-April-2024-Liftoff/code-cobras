@@ -2,10 +2,12 @@ package com.launchcode.polyglot.models.data;
 
 import com.launchcode.polyglot.models.Vowel;
 import com.launchcode.polyglot.models.dto.VowelLanguageJoinDTO;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,4 +30,10 @@ public interface VowelRepository extends CrudRepository<Vowel, Integer> {
             "JOIN language_vowel lv ON l.id = lv.language_id " +
             "JOIN vowel v ON v.id = lv.vowel_id WHERE l.id = :languageId", nativeQuery = true)
     List<VowelLanguageJoinDTO> findLanguageVowelJoinDataByLanguage(int languageId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM language_vowel WHERE language_id = :languageId AND vowel_id = :vowelId", nativeQuery = true)
+    void deleteVowelLanguageJoin(@Param("languageId") int languageId, @Param("vowelId") int vowelId);
+
 }

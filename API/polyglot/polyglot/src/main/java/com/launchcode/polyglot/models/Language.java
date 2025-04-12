@@ -1,7 +1,9 @@
 package com.launchcode.polyglot.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,15 +24,13 @@ public class Language {
     private String accessFlag;
     private String username;
 
-    @OneToMany(mappedBy = "language", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    @JsonIgnore
-    private List<Comment> comments = new ArrayList<>();
-
     @Lob
     private byte[] image;
-
     private String imageBase64;
+
+    @OneToMany(mappedBy = "language", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("comment-language")
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -38,7 +38,6 @@ public class Language {
             joinColumns = @JoinColumn(name = "language_id"),
             inverseJoinColumns = @JoinColumn(name = "vowel_id")
     )
-    @JsonManagedReference
     private List<Vowel> vowels = new ArrayList<>();
 
     @ManyToMany
@@ -47,8 +46,10 @@ public class Language {
             joinColumns = @JoinColumn(name = "language_id"),
             inverseJoinColumns = @JoinColumn(name = "consonant_id")
     )
-    @JsonManagedReference
-    private List<Consonant> consonants = new ArrayList<>();
+    private List<Consonant> consonants;
+
+    @OneToOne(mappedBy = "language", cascade = CascadeType.ALL)
+    private Syllable syllable;
 
     public Language(String name, String description, String accessFlag, String username, byte[] image) {
         this.name = name;

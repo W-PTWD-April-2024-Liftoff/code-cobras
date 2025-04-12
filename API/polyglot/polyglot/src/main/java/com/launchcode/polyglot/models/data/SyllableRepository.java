@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface SyllableRepository extends CrudRepository<Syllable, Integer> {
     List<Syllable> findAll();
+    List<Syllable> findByLanguageAccessFlag(String accessFlag);
 }

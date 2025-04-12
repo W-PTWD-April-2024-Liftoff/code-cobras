@@ -3,6 +3,7 @@ package com.launchcode.polyglot.controllers;
 import com.launchcode.polyglot.models.Comment;
 import com.launchcode.polyglot.models.Connection;
 import com.launchcode.polyglot.models.Language;
+import com.launchcode.polyglot.models.Syllable;
 import com.launchcode.polyglot.models.User;
 import com.launchcode.polyglot.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173",
@@ -35,6 +37,10 @@ public class HomeController {
 
     @Autowired
     private ConsonantRepository consonantRepository;
+
+    @Autowired
+    private SyllableRepository syllableRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -68,6 +74,21 @@ public class HomeController {
         }
     }
 
+    @GetMapping("/viewcomment")
+    public ResponseEntity<List<Comment>> getPrivateCommentByLanguage(@RequestParam String languageName) {
+        List<Comment> allComments = commentRepository.findAll();
+        List<Comment> returnList = new ArrayList<>();
+        returnList = allComments.stream()
+                .filter(comment -> comment.getLanguageName().equals(languageName))
+                .collect(Collectors.toList());
+
+        if (returnList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return ResponseEntity.ok(returnList);
+        }
+    }
+
     @GetMapping("/favorite")
     public ResponseEntity<List<Connection>> getAllConnectionsByUsername(@RequestParam String username) {
         List<Connection> allConnections = connectionRepository.findAll();
@@ -88,8 +109,7 @@ public class HomeController {
             @RequestParam("username") String username,
             @RequestParam("commentBody") String commentBody,
             @RequestParam("accessFlag") String accessFlag,
-            @RequestParam("languageName") String languageName
-    ) {
+            @RequestParam("languageName") String languageName) {
         try {
             User user = userRepository.findByUsername(username);
             Language language = languageRepository.findByName(languageName.trim());
@@ -103,6 +123,7 @@ public class HomeController {
             comment.setLanguageName(languageName);
             comment.setCommentBody(commentBody);
             comment.setAccessFlag(accessFlag);
+
             comment.setUser(user);
             comment.setLanguage(language);
 
@@ -116,7 +137,7 @@ public class HomeController {
     @PostMapping("/favorite")
     public ResponseEntity<String> addFavorite(@RequestParam(required = true) String username,
                                               @RequestParam(required = true) String followType,
-                                              @RequestParam(required=true) String followName) {
+                                              @RequestParam(required = true) String followName) {
         try {
             Connection connection = new Connection();
             connection.setUsername(username);
@@ -131,14 +152,35 @@ public class HomeController {
 
     @PutMapping("/comment/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable int id, @RequestBody Comment updatedComment) {
-        Comment existingComment = commentRepository.findCommentById(id);
-        if (existingComment == null) {
+        Comment specificComment = commentRepository.findCommentById(id);
+        if (specificComment == null) {
             return ResponseEntity.notFound().build();
         }
-        existingComment.setCommentBody(updatedComment.getCommentBody());
-        Comment savedComment = commentRepository.save(existingComment);
+        specificComment.setCommentBody(updatedComment.getCommentBody());
+        Comment savedComment = commentRepository.save(specificComment);
 
         return ResponseEntity.ok(savedComment);
+    }
+
+    @PutMapping("/editcomment/{id}")
+    public ResponseEntity<String> updatePrivateComment(@PathVariable int id, @RequestBody String commentBody, @RequestBody String languageName) {
+        List<Comment> comments = commentRepository.findAllByLanguageName(languageName);
+        Comment specificComment = commentRepository.findCommentById(id);
+        System.out.println(comments);
+        System.out.println(specificComment);
+        if (specificComment == null) {
+            return ResponseEntity.notFound().build();
+        }
+        specificComment.setCommentBody(commentBody);
+        commentRepository.save(specificComment);
+        if (!comments.isEmpty()) {
+            for (Comment comment : comments) {
+                comment.setLanguageName(languageName);
+                commentRepository.save(comment);
+            }
+            return ResponseEntity.ok("Comment(s) saved successfully");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @DeleteMapping("/comment/{id}")

@@ -38,7 +38,10 @@ export default function MyLanguages() {
         console.log(`Attempting to delete language with id: ${itemToDelete}`);
         try{
             await api.delete(`http://localhost:8080/deletelanguage/${itemToDelete}`);
-            console.log(`Item ${itemToDelete} deleted`);
+            console.log(`Language #${itemToDelete} deleted`);
+
+            //Add delete for vowels, consonants, comments, and syllables
+
             loadLanguages();
         } catch (error) {
             console.log(error.message);
@@ -74,10 +77,9 @@ export default function MyLanguages() {
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        {console.log(languages)}
                         { languages && languages.length > 0 ? (
                         languages.map((language, index) => (
-                            
                             <tr scope="row" key={index}>
                                 <th>{index+1}</th>
                                 <td>{language.name}</td>

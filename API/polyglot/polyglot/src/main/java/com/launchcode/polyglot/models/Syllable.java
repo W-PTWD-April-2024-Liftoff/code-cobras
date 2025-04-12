@@ -1,9 +1,9 @@
 package com.launchcode.polyglot.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Data;
+
 
 @Entity
 @Data
@@ -18,7 +18,11 @@ public class Syllable {
     private int onsetRequiredLength;
     private int codaRequiredLength;
 
-    //Constructor
+    @OneToOne
+    @JoinColumn(name = "language_id")
+    @JsonBackReference("syllable-language")
+    private Language language;
+
     public Syllable(int id, int onsetLength, int codaLength, int onsetRequiredLength, int codaRequiredLength) {
         this.id = id;
         this.onsetLength = onsetLength;
@@ -27,7 +31,5 @@ public class Syllable {
         this.codaRequiredLength = codaRequiredLength;
     }
 
-    //Default no-arg constructor
     public Syllable() {}
-
 }

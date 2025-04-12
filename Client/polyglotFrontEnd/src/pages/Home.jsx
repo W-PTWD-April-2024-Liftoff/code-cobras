@@ -15,6 +15,7 @@ export default function Home() {
     const [newComment, setNewComment] = useState('');
     const [vowelData, setVowelData] = useState([]);
     const [consonantData, setConsonantData] = useState([]);
+    const [syllableData, setSyllableData] = useState([]);
     const {loggedInUser} = useAuth();
     const [filteredLanguages, setFilteredLanguages] = useState([]);
 
@@ -24,10 +25,10 @@ export default function Home() {
         language: ""
       });
 
-      const handleFilterChange = (newFilters) => {
-        console.log(newFilters);
-        setFilters(newFilters);
-      };      
+    const handleFilterChange = (newFilters) => {
+    console.log(newFilters);
+    setFilters(newFilters);
+    };      
 
     useEffect(()=>{
         loadLanguages();        
@@ -43,6 +44,10 @@ export default function Home() {
     
     useEffect(()=>{
         loadConsonants();        
+    }, []);
+
+    useEffect(()=>{
+        loadSyllables();        
     }, []);
 
     useEffect(()=>{
@@ -112,6 +117,20 @@ export default function Home() {
             const data = await response.json();
             console.log('Consonant Data:', data);
             setConsonantData(data); 
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const loadSyllables = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/language/allsyllables`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Syllable Data:', data);
+            setSyllableData(data); 
         } catch (err) {
             setError(err.message);
         }
@@ -221,6 +240,16 @@ export default function Home() {
             return 'image/jpeg';
         }
         return 'image/jpeg'; // Default to JPEG
+    };
+
+    //Syllable display logic
+    const renderSyllableItems = (length, requiredLength) => {
+        const requiredC = Array.from({ length: requiredLength }, (_, i) => "C");
+        const unrequiredC = Array.from({ length: length - requiredLength }, (_, i) => "( C )");
+
+        return [...requiredC, ...unrequiredC].map((item, index) => (
+            <span key={index}>{item} </span>
+        ));
     };
 
     //Comments
@@ -467,6 +496,17 @@ export default function Home() {
                                                 ))}
                                             </div>
                                         </div>
+                                    )}
+
+                                    {/* Syllable Section */}
+                                    {syllableData[language.id] && syllableData[language.id].length > 0 && (
+                                    <div className="syllable-data-section mb-3">
+                                        <h6>Syllable Structure</h6>    
+                                        <div>
+                                            {renderSyllableItems(syllableData[language.id][0].onsetLength, syllableData[language.id][0].onsetRequiredLength)} V{" "}
+                                            {renderSyllableItems(syllableData[language.id][0].codaLength, syllableData[language.id][0].codaRequiredLength)}
+                                        </div>
+                                    </div>
                                     )}
 
                                     {/* Comment Section */}
