@@ -11,10 +11,17 @@ export default function Filter(props) {
         const [options, setOptions] = useState([]);
         const [selectedValue, setSelectedValue] = useState(null);
 
+        const [syllableLengths,setSyllableLengths] = useState([0,1,2,3]);
+
 
         const [consonant, setConsonant] = useState(props.filters.consonant);
         const [vowel, setVowel] = useState(props.filters.vowel);
         const [language, setLanguage] = useState(props.filters.language);
+
+        const [codaLength, setCodaLength] = useState(props.filters.codaLength);
+        const [onsetLength, setOnsetLength] = useState(props.filters.onsetLength);
+        const [requiredCodaLength, setRequiredCodaLength] = useState(props.filters.requiredCodaLength);
+        const [requiredOnsetLength, setRequiredOnsetLength] = useState(props.filters.requiredOnsetLength);
 
         const handleChange = (e) => {
           //setSelectedValue(e.target.value);
@@ -25,11 +32,19 @@ export default function Filter(props) {
             setVowel(value);
           } else if (name === "language") {
             setLanguage(value);
+          } else if (name === "codaLength") {
+            setCodaLength(value);
+          } else if (name === "onsetLength") {
+            setOnsetLength(value);
+          } else if (name === "requiredCodaLength") {
+            setRequiredCodaLength(value);
+          } else if (name === "requiredOnsetLength") {
+            setRequiredOnsetLength(value);
           }
         };
 
         const handleSubmit = (e) => {
-          props.onValuesChange({ consonant: consonant, vowel: vowel, language: language });
+          props.onValuesChange({ consonant: consonant, vowel: vowel, language: language, codaLength: codaLength, onsetLength: onsetLength, requiredCodaLength: requiredCodaLength, requiredOnsetLength: requiredOnsetLength });
           e.preventDefault();
           
         };        
@@ -86,7 +101,59 @@ export default function Filter(props) {
                 ))}
               </select>
               
-            </td></tr>            
+            </td></tr>    
+
+            <tr><td>
+                  Coda length: </td>
+                  <td><select className="form-select form-select-sm" name="codaLength" value={codaLength} onChange={handleChange}>
+                <option value="" >Select</option>
+                {syllableLengths.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              
+            </td></tr> 
+
+            <tr><td>
+                  Onset length: </td>
+                  <td><select className="form-select form-select-sm" name="onsetLength" value={onsetLength} onChange={handleChange}>
+                <option value="" >Select</option>
+                {syllableLengths.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              
+            </td></tr>  
+
+            <tr><td>
+                  Required Coda length: </td>
+                  <td><select className="form-select form-select-sm" name="requiredCodaLength" value={requiredCodaLength} onChange={handleChange}>
+                <option value="" >Select</option>
+                {syllableLengths.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              
+            </td></tr>
+
+                        <tr><td>
+                  Required Onset length: </td>
+                  <td><select className="form-select form-select-sm" name="requiredOnsetLength" value={requiredOnsetLength} onChange={handleChange}>
+                <option value="" >Select</option>
+                {syllableLengths.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              
+            </td></tr>                                     
            <tr><td colSpan="2"><button className='btn btn-primary' type="submit">Filter</button></td></tr>
            </tbody>
         </table>

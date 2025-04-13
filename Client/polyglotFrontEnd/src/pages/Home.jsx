@@ -22,7 +22,11 @@ export default function Home() {
     const [filters, setFilters] = useState({
         consonant: "",
         vowel: "",
-        language: ""
+        language: "",
+        codaLength: "",
+        onsetLength: "",
+        requiredCodaLength: "",
+        requiredOnsetLength: ""
       });
 
     const handleFilterChange = (newFilters) => {
@@ -139,6 +143,8 @@ export default function Home() {
     const filterLanguages = (event) => {
         //const searchTerm = event.target.value.toLowerCase();
 
+        let noRecordsFound = false; 
+
         const languageIdsByVowel = [];
 
         if(filters.vowel != ""){
@@ -152,6 +158,9 @@ export default function Home() {
                 }
             }
             }  
+            if(languageIdsByVowel.length === 0){
+                noRecordsFound = true;
+            }
         }
         const languageIdsByConsonant = [];
 
@@ -165,7 +174,10 @@ export default function Home() {
                 }
                 }
             }
-            }   
+            }  
+            if(languageIdsByConsonant.length === 0){
+                noRecordsFound = true;
+            }             
         }
         
         //console.log(filters.language);
@@ -175,12 +187,93 @@ export default function Home() {
             languageIdsByLanguage.push(parseInt(filters.language));
 
         } 
-        
+        //console.log(syllableData);
         //console.log(languageIdsByLanguage);
+
+
+        const languageIdsByCodaLength = [];
+
+        if(filters.codaLength != ""){
+            for (const languageId in syllableData) {
+            for (const obj of syllableData[languageId]) {
+                if (obj.hasOwnProperty('codaLength')) {
+                if (obj['codaLength'] == filters.codaLength) {
+                    languageIdsByCodaLength.push(parseInt(languageId));
+                    break;
+                }
+                }
+            }
+            } 
+            if(languageIdsByCodaLength.length === 0){
+                noRecordsFound = true;
+            }               
+        }    
+
+        //console.log(languageIdsByCodaLength);
+        
+        const languageIdsByOnsetLength = [];
+
+        if(filters.onsetLength != ""){
+            for (const languageId in syllableData) {
+            for (const obj of syllableData[languageId]) {
+                if (obj.hasOwnProperty('onsetLength')) {
+                if (obj['onsetLength'] == filters.onsetLength) {
+                    languageIdsByOnsetLength.push(parseInt(languageId));
+                    break;
+                }
+                }
+            }
+            } 
+            if(languageIdsByOnsetLength.length === 0){
+                noRecordsFound = true;
+            }               
+        } 
+        
+        //console.log(languageIdsByOnsetLength);
+        
+        const languageIdsByRequiredCodaLength = [];
+
+        if(filters.requiredCodaLength != ""){
+            for (const languageId in syllableData) {
+            for (const obj of syllableData[languageId]) {
+                if (obj.hasOwnProperty('codaRequiredLength')) {
+                if (obj['codaRequiredLength']==filters.requiredCodaLength) {
+                    languageIdsByRequiredCodaLength.push(parseInt(languageId));
+                    break;
+                }
+                }
+            }
+            }  
+            if(languageIdsByRequiredCodaLength.length === 0){
+                noRecordsFound = true;
+            }              
+        }  
+        
+        const languageIdsByRequiredOnsetLength = [];
+
+        if(filters.requiredOnsetLength != ""){
+            for (const languageId in syllableData) {
+            for (const obj of syllableData[languageId]) {
+                if (obj.hasOwnProperty('onsetRequiredLength')) {
+                if (obj['onsetRequiredLength']==filters.requiredOnsetLength) {
+                    languageIdsByRequiredOnsetLength.push(parseInt(languageId));
+                    break;
+                }
+                }
+            }
+            } 
+            if(languageIdsByRequiredOnsetLength.length === 0){
+                noRecordsFound = true;
+            }              
+        }          
 
         //console.log(languages);
         let newFilteredData;
-        if(languageIdsByLanguage.length === 0 && languageIdsByVowel.length === 0 && languageIdsByConsonant.length === 0){
+        if(noRecordsFound){
+
+        }
+        else {
+        if(languageIdsByLanguage.length === 0 && languageIdsByVowel.length === 0 && languageIdsByConsonant.length === 0 && languageIdsByCodaLength.length === 0 && languageIdsByOnsetLength.length === 0 && languageIdsByRequiredCodaLength.length === 0 && languageIdsByRequiredOnsetLength.length === 0 ){
             newFilteredData= languages
         } 
         else {
@@ -188,17 +281,22 @@ export default function Home() {
             .filter(
                 item => 
                     //item.name.toLowerCase().includes(filters.language.toLowerCase())  ||
-                languageIdsByLanguage.includes(item.id  )
-                || languageIdsByVowel.includes(item.id  )  
-                || languageIdsByConsonant.includes(item.id )  
+                (languageIdsByLanguage.includes(item.id  ) || languageIdsByLanguage.length === 0)
+                && (languageIdsByVowel.includes(item.id  )   || languageIdsByVowel.length === 0)
+                && (languageIdsByConsonant.includes(item.id )   || languageIdsByConsonant.length === 0)
+                && (languageIdsByCodaLength.includes(item.id) || languageIdsByCodaLength.length === 0)
+                && (languageIdsByOnsetLength.includes(item.id) || languageIdsByOnsetLength.length === 0)
+                && (languageIdsByRequiredCodaLength.includes(item.id) || languageIdsByRequiredCodaLength.length === 0)
+                && (languageIdsByRequiredOnsetLength.includes(item.id) || languageIdsByRequiredOnsetLength.length === 0)
             )
             //.map(item => item.trim())
+        }
         }
 
         //.filter(item=>item.consonant.toLowerCase().includes(filters.consonant.toLowerCase))
         //.filter(item=>item.vowel.toLowerCase().includes(filters.vowel.toLowerCase));
         //.map(item => ({ ...item, name: item.name.trim() }));
-        console.log(newFilteredData);
+        //console.log(newFilteredData);
         setFilteredLanguages(newFilteredData);
         //console.log(filteredLanguages.length);
         //console.log(newFilteredData.length);
