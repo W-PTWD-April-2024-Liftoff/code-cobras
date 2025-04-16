@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -21,23 +23,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 @Configuration
 public class PolyglotApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(PolyglotApplication.class, args);
 	}
 
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173", "http://localhost:5174")  // Allow React frontend
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowCredentials(true);
-            }
-        };
-    }
+		return new WebMvcConfigurer() {
+			@Override
+				public void addCorsMappings (CorsRegistry registry){
+					registry.addMapping("/**")
+							.allowedOrigins("http://localhost:5173", "http://localhost:5174")  // Allow React frontend
+							.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+							.allowCredentials(true);
+				}
+			}
+
+			;
+	}
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder(){
@@ -48,7 +51,7 @@ public class PolyglotApplication {
 	private UserDetailsService userDetailsService;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
 		http
 				.csrf(AbstractHttpConfigurer::disable)
 				.cors(Customizer.withDefaults())
@@ -82,6 +85,21 @@ public class PolyglotApplication {
 						.requestMatchers("/editprofile/*").permitAll()
 						.anyRequest().authenticated()
 				)
+				.oauth2Login(oauth2 -> oauth2
+						.authorizationEndpoint(authorization -> authorization
+								.baseUri(OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI)
+						)
+						.redirectionEndpoint(redirection -> redirection
+								.baseUri("/oauth2/callback/*")
+						)
+						.defaultSuccessUrl("http://localhost:5173", true)
+				)
+				.logout(logout -> logout
+						.logoutSuccessUrl("http://localhost:5173")
+						.invalidateHttpSession(true)
+						.clearAuthentication(true)
+						.deleteCookies("JSESSIONID")
+				)
 				.httpBasic(Customizer.withDefaults());
 		return http.build();
 	}
@@ -94,3 +112,4 @@ public class PolyglotApplication {
 		return  provider;
 	}
 }
+
