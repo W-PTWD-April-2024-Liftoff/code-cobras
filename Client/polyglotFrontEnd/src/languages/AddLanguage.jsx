@@ -345,7 +345,7 @@ export default function AddLanguage() {
                             name="accessFlag" 
                             onChange={(e)=>onRadioChange(e)} 
                             defaultChecked={accessFlag}
-                            id="public"/>
+                            id="public" required/>
                         </label>
                         
                     </div>
