@@ -86,14 +86,31 @@ public class PolyglotApplication {
 						.anyRequest().authenticated()
 				)
 				.oauth2Login(oauth2 -> oauth2
+						.failureHandler((request, response, exception) -> {
+							exception.printStackTrace();
+							response.sendRedirect("/login?error=" + exception.getMessage());
+						})
+						.loginPage("/login")
+						.defaultSuccessUrl("http://localhost:5173", true)
+						.successHandler(((request, response, authentication) ->
+								response.sendRedirect("http://localhost:5173")
+						))
 						.authorizationEndpoint(authorization -> authorization
-								.baseUri(OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI)
+								.baseUri("/oauth2/authorization")
 						)
 						.redirectionEndpoint(redirection -> redirection
-								.baseUri("/oauth2/callback/*")
-						)
-						.defaultSuccessUrl("http://localhost:5173", true)
+								.baseUri("/login/oauth2/code/google"))
+
 				)
+//				.oauth2Login(oauth2 -> oauth2
+//						.authorizationEndpoint(authorization -> authorization
+//								.baseUri(OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI)
+//						)
+//						.redirectionEndpoint(redirection -> redirection
+//								.baseUri("/oauth2/callback/*")
+//						)
+//						.defaultSuccessUrl("http://localhost:5173", true)
+//				)
 				.logout(logout -> logout
 						.logoutSuccessUrl("http://localhost:5173")
 						.invalidateHttpSession(true)

@@ -10,9 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -199,5 +204,19 @@ public class HomeController {
         }
         connectionRepository.deleteById(id);
         return ResponseEntity.ok("Delete Successful");
+    }
+
+    @GetMapping("/me")
+    public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
+        if (principal == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not authenticated");
+        }
+
+        return Map.of(
+                "name", principal.getAttribute("name"),
+                "email", principal.getAttribute("email"),
+                "picture", principal.getAttribute("picture"),
+                "authProvider", "google"
+        );
     }
 }

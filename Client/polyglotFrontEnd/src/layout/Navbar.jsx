@@ -6,16 +6,10 @@ import { useAuth } from '../security/AuthContext';
 export default function Navbar() {
 
 
-    //const auth = useContext(AuthProvider); // Access the context
-    const {isAuthenticated} = useAuth();
+    const { user, isAuthenticated} = useAuth();
     const {logout} = useAuth();
     const navigate = useNavigate()
-//     let isVisible = false;
-//     if(!auth===undefined){
-//         if(auth.isAuthenticated){isVisible = true}
-//     }
-//     console.log(auth);
- //console.log(isAuthenticated);
+
  const signout = () =>{
     logout();
     navigate("/login");

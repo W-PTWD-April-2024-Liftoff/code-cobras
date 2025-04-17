@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 const AuthContext = createContext();
 
@@ -6,6 +6,19 @@ export const useAuth = () => useContext(AuthContext)
 
 
 export const AuthProvider = ({children}) => {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/me', {
+          credentials: 'include', 
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error('Not authenticated');
+            return res.json();
+          })
+          .then((data) => login(data.name, data.email))
+          .catch(() => setUser(null));
+      }, []);
 
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return localStorage.getItem('isAuthenticated') === 'true'
@@ -20,7 +33,7 @@ export const AuthProvider = ({children}) => {
     })
 
     const login = (username,userid) => {
-        //console.log(loggedInUser)
+        console.log(loggedInUser)
         setIsAuthenticated(true)
         localStorage.setItem('isAuthenticated', true)
         setloggedInUser(username)

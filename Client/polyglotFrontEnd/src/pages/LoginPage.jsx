@@ -1,77 +1,105 @@
 import React, { useState } from "react";
-import axios from 'axios'
+import axios from 'axios';
 import { useAuth } from '../security/AuthContext';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
     const [error, setError] = useState('');
-    const navigate = useNavigate()
-    const {login} = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
-    const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
-    const GITHUB_REDIRECT_URI = import.meta.env.VITE_GITHUB_REDIRECT_URI;
-    const GITHUB_AUTH_URL = `https://github.com/login/oauth/authorize?response_type=code&client_id=${GITHUB_CLIENT_ID}&scope=user:user&redirect_uri=${GITHUB_REDIRECT_URI}`;
+    
+    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const GOOGLE_REDIRECT_URI = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+    const GOOGLE_AUTH_URL = `http://localhost:8080/oauth2/authorization/google`;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('')
-
-        const loginData = {
-            username,
-            password
-        }        
+        setError('');
+        setIsLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:8080/login', loginData);
+            const response = await axios.post('http://localhost:8080/login', {
+                username,
+                password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            });
 
-            if (response.status === 200){
-                console.log("completed!");
-                console.log(response.data);
-                const myArray = response.data.split(":");
-                //login(response.data);
-                login(myArray[0],myArray[1]);
+            if (response.status === 200) {
+                const [token, ...userData] = response.data.split(":");
+                login(token, userData.join(':'));
                 navigate("/languages");
             }
-            else {
-                console.log(response);
-                const errorData = await response.json()
-                setError(errorData.message || 'Login failed. Please retry!')
-            }
-           
         } catch (error) {
-            // Handle error
-            setError('An error occurred. please retry')
+            if (error.response) {
+                // The request was made and the server responded
+                setError(error.response.data.message || 'Login failed. Please try again.');
+            } else if (error.request) {
+                // The request was made but no response was received
+                setError('No response from server. Please try again.');
+            } else {
+                // Something happened in setting up the request
+                setError('An error occurred. Please try again.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };    
 
     return (
-        <div className="col">
-        <div className="text-center mt-5">
-            <h1>Welcome! </h1>
-            <p>Please log in to continue.</p>
-            <a href={GITHUB_AUTH_URL} className="btn btn-primary">
-                Login with Github
-            </a>
+        <div className="login-container">
+            <div className="text-center mt-5">
+                <h1>Welcome!</h1>
+                <p>Please log in to continue.</p>
+                <a href={GOOGLE_AUTH_URL} className="btn btn-primary">
+                    Login with Google
+                </a>
+            </div>
+            
+            <div className="divider">
+                <span className="divider-text">or</span>
+            </div>
+            
+            <div className="login-form">
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <input 
+                            type="text" 
+                            name="username" 
+                            placeholder="Username" 
+                            value={username} 
+                            onChange={(e) => setUsername(e.target.value)} 
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            type="password" 
+                            name="password" 
+                            placeholder="Password" 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            required
+                        />
+                    </div>
+                    <button type="submit" disabled={isLoading}>
+                        {isLoading ? 'Logging in...' : 'Login'}
+                    </button>
+                </form>
+                {error && <p className="error-message">{error}</p>}
+                <p className="register-link">
+                    Don't have an account? <Link to="/register">Register here</Link>
+                </p>
+            </div>
         </div>
-        <div className="vl">
-       <span className="vl-innertext">or</span>
-   </div>
-   
-   <div className="row">
-       <form onSubmit={handleSubmit}>
-           <input type="text" name="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-           <input type="password" name="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-           <button type="submit">Login</button>
-       </form>
-   </div> 
-   <p className='errorNotification'>{error}</p>
-   </div>               
     );
-
 };
 
 export default LoginPage;

@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Value;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -43,7 +46,6 @@ public class AuthController {
         response.put("authorizationUrl", buildAuthorizationUrl());
         return ResponseEntity.ok(response);
     }
-
 
     private String buildAuthorizationUrl() {
         return AUTHORIZATION_BASE_URL + "?" +
